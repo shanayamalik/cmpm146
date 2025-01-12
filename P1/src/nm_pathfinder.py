@@ -18,8 +18,8 @@ def find_path(source_point, destination_point, mesh):
         A path (list of points) from source_point to destination_point if exists
         A list of boxes explored by the algorithm
     """
-    # Helper function to identify the box containing a given point
     def find_box(point):
+        """Find the box that contains the given point."""
         for box in mesh['boxes']:
             x1, x2, y1, y2 = box
             if x1 <= point[0] < x2 and y1 <= point[1] < y2:
@@ -30,77 +30,42 @@ def find_path(source_point, destination_point, mesh):
     end_box = find_box(destination_point)
 
     if not start_box or not end_box:
-        print("No valid start or end box found!")
+        print("Source or destination point is not within any box!")
         return [], []
 
-    # Priority queues for forward and backward search
-    forward_queue = [(0, start_box, source_point)]
-    backward_queue = [(0, end_box, destination_point)]
-
-    # Distances and predecessors for both directions
-    forward_dist = {start_box: 0}
-    backward_dist = {end_box: 0}
-    forward_prev = {start_box: source_point}
-    backward_prev = {end_box: destination_point}
-
+    # Priority queue for A* search
+    queue = [(0, start_box, source_point, [])]  # (priority, current_box, current_point, path_so_far)
     visited_boxes = set()
+    distances = {start_box: 0}
 
-    def expand_search(queue, dist, prev, other_dist):
-        if not queue:
-            return None
+    while queue:
+        priority, current_box, current_point, path_so_far = heappop(queue)
 
-        priority, current_box, current_point = heappop(queue)
+        # Add the current box to visited
         visited_boxes.add(current_box)
 
-        if current_box in other_dist:
-            return current_box
+        # If we reach the destination box, construct the path
+        if current_box == end_box:
+            # Add the final segment to the path
+            path_so_far.append(destination_point)
+            return path_so_far, list(visited_boxes)
 
+        # Expand neighbors
         for neighbor in mesh['adj'].get(current_box, []):
+            # Constrain the next point to be within the bounds of the neighbor box
             next_point = (
                 min(max(current_point[0], neighbor[0]), neighbor[1] - 1),
                 min(max(current_point[1], neighbor[2]), neighbor[3] - 1)
             )
-            cost = euclidean_distance(current_point, next_point)
-            new_dist = dist[current_box] + cost
+            # Calculate cost and heuristic
+            cost = distances[current_box] + euclidean_distance(current_point, next_point)
+            heuristic = euclidean_distance(next_point, destination_point)
 
-            if neighbor not in dist or new_dist < dist[neighbor]:
-                dist[neighbor] = new_dist
-                prev[neighbor] = next_point
-                heuristic = euclidean_distance(next_point, destination_point)
-                heappush(queue, (new_dist + heuristic, neighbor, next_point))
+            if neighbor not in distances or cost < distances[neighbor]:
+                distances[neighbor] = cost
+                # Add the direct path from the source or previous point
+                new_path = path_so_far + [next_point]
+                heappush(queue, (cost + heuristic, neighbor, next_point, new_path))
 
-        return None
-
-    meeting_box = None
-
-    while forward_queue and backward_queue:
-        meeting_box = expand_search(forward_queue, forward_dist, forward_prev, backward_dist)
-        if meeting_box:
-            break
-
-        meeting_box = expand_search(backward_queue, backward_dist, backward_prev, forward_dist)
-        if meeting_box:
-            break
-
-    if not meeting_box:
-        print("No path!")
-        return [], list(visited_boxes)
-
-    # Reconstruct path
-    path = []
-
-    # Forward path
-    box = meeting_box
-    while box in forward_prev:
-        path.append(forward_prev[box])
-        box = next((b for b, p in forward_prev.items() if p == forward_prev[box] and b != box), None)
-    path.reverse()
-
-    # Backward path
-    box = meeting_box
-    while box in backward_prev:
-        if backward_prev[box] not in path:
-            path.append(backward_prev[box])
-        box = next((b for b, p in backward_prev.items() if p == backward_prev[box] and b != box), None)
-
-    return path, list(visited_boxes)
+    print("No path found!")
+    return [], list(visited_boxes)
