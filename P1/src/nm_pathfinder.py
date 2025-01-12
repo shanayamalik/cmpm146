@@ -34,7 +34,7 @@ def find_path(source_point, destination_point, mesh):
         return [], []
 
     # Priority queue for A* search
-    queue = [(0, start_box, source_point, [])]  # (priority, current_box, current_point, path_so_far)
+    queue = [(0, start_box, source_point, [source_point])]  # (priority, current_box, current_point, path_so_far)
     visited_boxes = set()
     distances = {start_box: 0}
 
@@ -63,7 +63,7 @@ def find_path(source_point, destination_point, mesh):
 
             if neighbor not in distances or cost < distances[neighbor]:
                 distances[neighbor] = cost
-                # Add the direct path from the source or previous point
+                # Add the next point to the path
                 new_path = path_so_far + [next_point]
                 heappush(queue, (cost + heuristic, neighbor, next_point, new_path))
 
