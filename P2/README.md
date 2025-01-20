@@ -1,11 +1,7 @@
 # Ultimate Tic-Tac-Toe with Monte Carlo Tree Search
 
-## Team Members
-- Member 1: [Your Name] (responsible for `mcts_vanilla.py` and Experiment 1)
-- Member 2: [Partner's Name] (responsible for `mcts_modified.py` and Experiment 2)
-
 ## Overview
-This project implements Monte Carlo Tree Search (MCTS) to play Ultimate Tic-Tac-Toe. It includes:
+The source code implements Monte Carlo Tree Search (MCTS) to play Ultimate Tic-Tac-Toe. It includes:
 1. A vanilla MCTS bot that uses random rollouts.
 2. A modified MCTS bot with a heuristic-based rollout strategy.
 
@@ -48,19 +44,6 @@ We also conduct experiments to analyze the performance of these bots under vario
 - Setup: Use the same tree size for both bots and simulate multiple games.
 - Execution: Simulate games between the vanilla and modified bots.
 - Analysis: Document win rates and observations in `experiment2.pdf`.
-
-### Experiment 3 (Extra Credit): Time Constraint
-- Objective: Evaluate the effect of a time constraint on tree growth and performance.
-- Setup: Modify both bots to grow the tree within a fixed time budget. Run simulations at varying time limits.
-- Execution: Compare tree sizes and win rates for both bots under time constraints.
-- Analysis: Document results, including differences in tree sizes, win rates, and execution time.
-
----
-
-## Notes
-- Parameters such as tree size and exploration factors are adjustable in the respective bot files.
-- Experiments with larger tree sizes may require significant time; adjust configurations if needed.
-- Additional bonus points can be achieved by parallelizing simulations for improved performance.
 
 ---
 
