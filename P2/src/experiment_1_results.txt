@@ -1,8 +1,5 @@
-Results for tree size 100: {'draw': 0, 1: 59, 2: 41}
-Time taken: 195.51 seconds
-
-Results for tree size 250: {'draw': 0, 1: 56, 2: 44}
-Time taken: 462.90 seconds
-
-Results for tree size 500: {'draw': 0, 1: 58, 2: 42}
-Time taken: 923.40 seconds
+Final results:
+Tree size 100: {'draw': 0, 1: 59, 2: 41}
+Tree size 250: {'draw': 0, 1: 56, 2: 44}
+Tree size 500: {'draw': 0, 1: 58, 2: 42}
+Tree size 1000: {'draw': 0, 1: 52, 2: 48}
