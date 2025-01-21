@@ -4,24 +4,69 @@ import random
 from math import sqrt, log
 
 # Number of nodes to simulate and exploration parameter
-num_nodes = 100
+num_nodes = 1000
 explore_faction = 2.0
 
 def traverse_nodes(node: MCTSNode, board: Board, state, bot_identity: int):
-    """ Traverse the tree until a node with untried actions or a terminal state is reached. """
-    while not node.untried_actions and node.child_nodes:
-        # Use UCB to select the next node
-        action, node = max(node.child_nodes.items(), key=lambda item: ucb(item[1], is_opponent=(bot_identity != board.current_player(state))))
-        state = board.next_state(state, action)
-    return node, state
+    """Traverses the tree until the end criterion are met."""
+    current_node = node
+    current_state = state
+
+    # Continue traversing until we reach a terminal state
+    while not board.is_ended(current_state):
+        # If we find a node with untried actions, select it for expansion
+        if current_node.untried_actions:
+            return current_node, current_state
+
+        # Implementation of the selection phase using Upper Confidence Bound (UCB)
+        # This helps balance exploration and exploitation during tree traversal
+        best_value = float('-inf')
+        best_child = None
+        best_action = None
+
+        # Evaluate all child nodes using UCB formula
+        for action in current_node.child_nodes:
+            child = current_node.child_nodes[action]
+            # Adjust UCB calculation based on whether it's opponent's turn
+            is_opponent = board.current_player(current_state) != bot_identity
+            value = ucb(child, is_opponent)
+            
+            if value > best_value:
+                best_value = value
+                best_child = child
+                best_action = action
+
+        # If no children are available, return current node
+        if best_child is None:
+            return current_node, current_state
+
+        # Move to the selected child node
+        current_node = best_child
+        current_state = board.next_state(current_state, best_action)
+
+    return current_node, current_state
 
 def expand_leaf(node: MCTSNode, board: Board, state):
-    """ Expand the tree by adding a child node for one of the untried actions. """
-    action = node.untried_actions.pop()
-    next_state = board.next_state(state, action)
-    child_node = MCTSNode(parent=node, parent_action=action, action_list=board.legal_actions(next_state))
+    """Adds a new leaf to the tree by creating a new child node."""
+    if board.is_ended(state):
+        return node, state
+
+    # Systematic expansion by always trying the first untried action
+    # This ensures a more structured exploration of the game tree
+    action = node.untried_actions[0]
+    new_state = board.next_state(state, action)
+    node.untried_actions.remove(action)
+    
+    # Create new child node with all possible actions from the new state
+    child_node = MCTSNode(
+        parent=node,
+        parent_action=action,
+        action_list=board.legal_actions(new_state)
+    )
+    
+    # Add the new child to the tree
     node.child_nodes[action] = child_node
-    return child_node, next_state
+    return child_node, new_state
 
 def heuristic(board: Board, state, prev_action, bot_identity: int):
 
@@ -106,31 +151,55 @@ def rollout(board: Board, state):
 
 def backpropagate(node: MCTSNode | None, won: bool):
     """ Update the win and visit counts for nodes from the leaf back to the root. """
-    while node is not None:
-        node.visits += 1
-        if node.child_nodes:
-            # Calculate the average and maximum values from children
-            avg_weight = 0.8 # weight for avg values
-            max_weight = 0.2 # weight for max value
-            child_values = [child.wins / child.visits if child.visits > 0 else 0 for child in node.child_nodes.values()]
-            avg_value = sum(child_values) / len(child_values) if child_values else 0
-            max_value = max(child_values) if child_values else 0
-            node.wins = avg_weight * avg_value + max_weight * max_value # value will be a weighted sum of the avg values and the max value seen
-        else:
-            node.wins += 1 if won else 0
-        # won = not won  # Alternate perspective
-        node = node.parent
+    current = node
+    while current is not None:
+        current.visits += 1
+        if won:
+            current.wins += 1 
+        current = current.parent
 
 def ucb(node: MCTSNode, is_opponent: bool):
-    """ Calculate the UCB value for a node. """
+    """Calculates the UCB value for the given node."""
     if node.visits == 0:
-        return float('inf')  # Ensure unvisited nodes are prioritized
-    win_rate = (1 - node.wins / node.visits) if is_opponent else (node.wins / node.visits)
-    return win_rate + explore_faction * sqrt(log(node.parent.visits) / node.visits)
+        return float('inf')  # Ensures unvisited nodes are explored
+    
+    # Calculate win rate adjusted for current player perspective
+    win_rate = node.wins / node.visits
+    if is_opponent:
+        win_rate = 1 - win_rate  # Invert win rate for opponent's turn
+    
+    # UCB exploration term - balances exploration vs exploitation
+    exploration = explore_faction * sqrt(log(node.parent.visits) / node.visits)
+    
+    return win_rate + exploration
 
 def get_best_action(root_node: MCTSNode):
-    """ Return the action with the most visits from the root node. """
-    return max(root_node.child_nodes.items(), key=lambda item: item[1].visits)[0]
+    """Selects the best action from the root node in the MCTS tree."""
+    best_action = None
+    best_value = float('-inf')
+    
+    # Advanced action selection considering both win rate and visit count
+    # This helps choose more reliable moves with sufficient exploration
+    for action, child in root_node.child_nodes.items():
+        if child.visits == 0:
+            continue
+            
+        # Weighted combination of win rate and visit frequency
+        visit_weight = 0.7  # Bias towards more explored nodes
+        win_rate = child.wins / child.visits
+        visit_rate = child.visits / root_node.visits
+        value = (1 - visit_weight) * win_rate + visit_weight * visit_rate
+        
+        if value > best_value:
+            best_value = value
+            best_action = action
+    
+    # Fallback strategy if no action meets criteria
+    if best_action is None and root_node.child_nodes:
+        best_action = max(root_node.child_nodes.items(), 
+                         key=lambda x: x[1].visits)[0]
+            
+    return best_action
 
 def is_win(board: Board, state, identity_of_bot: int):
     """ Check if the given state is a win for the bot. """
@@ -139,30 +208,33 @@ def is_win(board: Board, state, identity_of_bot: int):
     return outcome[identity_of_bot] == 1
 
 def think(board: Board, current_state):
-    """ Perform MCTS and return the best action from the root node. """
-    bot_identity = board.current_player(current_state)  # Determine which bot is playing
+    """Performs MCTS by sampling games and calling the appropriate functions."""
+    # Initialize the root of the game tree
+    bot_identity = board.current_player(current_state)
     root_node = MCTSNode(parent=None, parent_action=None, action_list=board.legal_actions(current_state))
 
+    # Main MCTS loop - builds game tree through repeated simulations
     for _ in range(num_nodes):
-        # Start from the root and traverse the tree
         state = current_state
         node = root_node
-        
-        # Selection: Traverse to a promising node
+
+        # Four phases of MCTS:
+        # 1. Selection - Find promising node to expand
         node, state = traverse_nodes(node, board, state, bot_identity)
-
-        # Expansion: Add a new child node if possible
-        if node.untried_actions and not board.is_ended(state):
+        
+        # 2. Expansion - Add new node to tree
+        if not board.is_ended(state):
             node, state = expand_leaf(node, board, state)
-
-        # Simulation: Rollout to a terminal state
-        final_state = rollout(board, state)
-
-        # Backpropagation: Update the tree with the results
-        won = is_win(board, final_state, bot_identity)
+        
+        # 3. Simulation - Random playthrough to terminal state
+        end_state = rollout(board, state)
+        
+        # 4. Backpropagation - Update statistics along path
+        won = is_win(board, end_state, bot_identity)
         backpropagate(node, won)
 
-    # Return the action with the highest visit count
+    # Select final move based on gathered statistics
     best_action = get_best_action(root_node)
     print(f"Action chosen: {best_action}")
     return best_action
+
