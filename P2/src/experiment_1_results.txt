@@ -1,5 +1,8 @@
 Final results:
 
+Player 1: 100 nodes
+Player 2: 100, 250, 500, 750, 1000 nodes
+
 Tree size 100:
 Final win counts: {'draw': 0, 1: 47, 2: 53}
 198.2352277909813  seconds
@@ -8,7 +11,13 @@ Tree size 250:
 Final win counts: {'draw': 0, 1: 27, 2: 73}
 327.2709753329982  seconds
 
+Tree size 500:
 Final win counts: {'draw': 0, 1: 18, 2: 82}
 565.4933105419914  seconds
 
+Tree size 750:
 
+
+Tree size 1000:
+Final win counts: {'draw': 0, 1: 7, 2: 93}
+967.7220293760183  seconds
