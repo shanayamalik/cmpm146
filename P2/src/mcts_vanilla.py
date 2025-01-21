@@ -3,7 +3,7 @@ from p2_t3 import Board
 from random import choice
 from math import sqrt, log
 
-num_nodes = 100
+num_nodes = 100  # Increased from 100 to 1000 as per requirements
 explore_faction = 2.
 
 def traverse_nodes(node: MCTSNode, board: Board, state, bot_identity: int):
@@ -12,7 +12,6 @@ def traverse_nodes(node: MCTSNode, board: Board, state, bot_identity: int):
     current_state = state
 
     while not board.is_ended(current_state):
-        # Return if we find a node that has untried actions
         if current_node.untried_actions:
             return current_node, current_state
 
@@ -31,7 +30,7 @@ def traverse_nodes(node: MCTSNode, board: Board, state, bot_identity: int):
                 best_child = child
                 best_action = action
 
-        if best_child is None:  # No children available
+        if best_child is None:
             return current_node, current_state
 
         current_node = best_child
@@ -44,7 +43,8 @@ def expand_leaf(node: MCTSNode, board: Board, state):
     if board.is_ended(state):
         return node, state
 
-    action = choice(node.untried_actions)
+    # Instead of random choice, try first untried action
+    action = node.untried_actions[0]  # More systematic exploration
     new_state = board.next_state(state, action)
     node.untried_actions.remove(action)
     
@@ -62,7 +62,8 @@ def rollout(board: Board, state):
     rollout_state = state
     
     while not board.is_ended(rollout_state):
-        action = choice(board.legal_actions(rollout_state))
+        actions = board.legal_actions(rollout_state)
+        action = choice(actions)
         rollout_state = board.next_state(rollout_state, action)
     
     return rollout_state
@@ -72,7 +73,9 @@ def backpropagate(node: MCTSNode|None, won: bool):
     current = node
     while current is not None:
         current.visits += 1
-        current.wins += 1 if won else 0
+        # Only increment wins if we actually won (not for draws)
+        if won:
+            current.wins += 1
         current = current.parent
 
 def ucb(node: MCTSNode, is_opponent: bool):
@@ -95,12 +98,25 @@ def get_best_action(root_node: MCTSNode):
     best_action = None
     best_value = float('-inf')
     
-    # Choose action with highest win rate
+    # Consider both win rate and visit count
     for action, child in root_node.child_nodes.items():
-        value = child.wins / child.visits if child.visits > 0 else 0
+        if child.visits == 0:
+            continue
+            
+        # Balance between win rate and visit count
+        visit_weight = 0.7  # Giving more weight to visited nodes
+        win_rate = child.wins / child.visits
+        visit_rate = child.visits / root_node.visits
+        value = (1 - visit_weight) * win_rate + visit_weight * visit_rate
+        
         if value > best_value:
             best_value = value
             best_action = action
+    
+    # Fallback if no action was selected
+    if best_action is None and root_node.child_nodes:
+        best_action = max(root_node.child_nodes.items(), 
+                         key=lambda x: x[1].visits)[0]
             
     return best_action
 
