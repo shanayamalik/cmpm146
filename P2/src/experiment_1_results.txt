@@ -8,3 +8,7 @@ Tree size 250:
 Final win counts: {'draw': 0, 1: 27, 2: 73}
 327.2709753329982  seconds
 
+Final win counts: {'draw': 0, 1: 18, 2: 82}
+565.4933105419914  seconds
+
+
