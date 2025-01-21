@@ -3,3 +3,6 @@ Time taken: 195.51 seconds
 
 Results for tree size 250: {'draw': 0, 1: 56, 2: 44}
 Time taken: 462.90 seconds
+
+Results for tree size 500: {'draw': 0, 1: 58, 2: 42}
+Time taken: 923.40 seconds
