@@ -1,5 +1,10 @@
 Final results:
-Tree size 100: {'draw': 0, 1: 59, 2: 41}
-Tree size 250: {'draw': 0, 1: 56, 2: 44}
-Tree size 500: {'draw': 0, 1: 58, 2: 42}
-Tree size 1000: {'draw': 0, 1: 52, 2: 48}
+
+Tree size 100:
+Final win counts: {'draw': 0, 1: 47, 2: 53}
+198.2352277909813  seconds
+
+Tree size 250:
+Final win counts: {'draw': 0, 1: 27, 2: 73}
+327.2709753329982  seconds
+
