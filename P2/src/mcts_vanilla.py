@@ -5,7 +5,7 @@ from math import sqrt, log
 
 # Configuration parameters for MCTS
 # Increased number of nodes allows for better tree exploration and stronger play
-num_nodes = 100 
+num_nodes = 1000 
 # Exploration parameter in UCB formula - balances exploration vs exploitation
 explore_faction = 2.
 
