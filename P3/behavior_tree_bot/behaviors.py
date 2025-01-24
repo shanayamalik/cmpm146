@@ -3,8 +3,17 @@ import sys
 sys.path.insert(0, '../')
 from planet_wars import issue_order
 
+# Main behavior functions that determine bot actions
+# Each function checks fleet availability and returns False if fleet exists
+# Ships are only sent when sufficient numbers are available
+# Most functions use a buffer of 10-20 ships for safety
+
 def defend_weakest_planet(state):
-   """Send reinforcements to planets under attack"""
+   """Send reinforcements to planets under attack
+   Returns False if:
+   - Fleet already exists
+   - No planets or enemy fleets
+   - Not enough ships to send (less than 20)"""
    if len(state.my_fleets()) >= 1:
        return False
    
@@ -18,11 +27,14 @@ def defend_weakest_planet(state):
    strongest_planet = max(my_planets, key=lambda p: p.num_ships)
 
    if strongest_planet.num_ships > 20:
-       return issue_order(state, strongest_planet.ID, weakest_planet.ID, 20)
+       ships_to_send = 20
+       return issue_order(state, strongest_planet.ID, weakest_planet.ID, ships_to_send)
    return False
 
 def spread_to_strongest_neutral_planet(state):
-   """Target neutral planets with highest growth rate"""
+   """Target neutral planets with highest growth rate
+   Prioritizes planets that will produce more ships over time
+   Uses 10 ship buffer when attacking"""
    if len(state.my_fleets()) >= 1:
        return False
    
@@ -39,7 +51,9 @@ def spread_to_strongest_neutral_planet(state):
    return False
 
 def attack_enemy_weakpoint(state):
-   """Attack the weakest enemy planet"""
+   """Attack weakest enemy planet
+   Only attacks if we have significant numerical advantage
+   Uses 20 ship buffer for stronger attack force"""
    if len(state.my_fleets()) >= 1:
        return False
    
@@ -56,7 +70,9 @@ def attack_enemy_weakpoint(state):
    return False
 
 def spread_to_closest_neutral_planet(state):
-   """Expand to closest neutral planet"""
+   """Expand to closest neutral planet
+   Uses distance calculation to find nearest target
+   Maintains 10 ship buffer for capturing neutral planets"""
    if len(state.my_fleets()) >= 1:
        return False
    
