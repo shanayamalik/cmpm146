@@ -6,7 +6,6 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
-# Import specific functions instead of using *
 from checks import (
     if_neutral_planet_available,
     have_largest_fleet,
@@ -44,7 +43,7 @@ def setup_behavior_tree():
     aggressive_plan.child_nodes = [strong_fleet, strong_attack]
 
     fallback_plan = Sequence(name='Fallback Strategy')
-    safe_to_spread_check = Check(safe_to_spread)  # Renamed to avoid naming conflict
+    safe_to_spread_check = Check(safe_to_spread)
     spread = Action(spread_to_closest_neutral_planet)
     fallback_plan.child_nodes = [safe_to_spread_check, spread]
 
@@ -54,26 +53,26 @@ def setup_behavior_tree():
     return root
 
 def do_turn(state):
-   behavior_tree.execute(planet_wars)
+    behavior_tree.execute(state)
 
 if __name__ == '__main__':
-   logging.basicConfig(filename=__file__[:-3] + '.log', filemode='w', level=logging.DEBUG)
+    logging.basicConfig(filename=__file__[:-3] + '.log', filemode='w', level=logging.DEBUG)
 
-   behavior_tree = setup_behavior_tree()
-   try:
-       map_data = ''
-       while True:
-           current_line = input()
-           if len(current_line) >= 2 and current_line.startswith("go"):
-               planet_wars = PlanetWars(map_data)
-               do_turn(planet_wars)
-               finish_turn()
-               map_data = ''
-           else:
-               map_data += current_line + '\n'
+    behavior_tree = setup_behavior_tree()
+    try:
+        map_data = ''
+        while True:
+            current_line = input()
+            if len(current_line) >= 2 and current_line.startswith("go"):
+                planet_wars = PlanetWars(map_data)
+                do_turn(planet_wars)
+                finish_turn()
+                map_data = ''
+            else:
+                map_data += current_line + '\n'
 
-   except KeyboardInterrupt:
-       print('ctrl-c, leaving ...')
-   except Exception:
-       traceback.print_exc(file=sys.stdout)
-       logging.exception("Error in bot.")
+    except KeyboardInterrupt:
+        print('ctrl-c, leaving ...')
+    except Exception:
+        traceback.print_exc(file=sys.stdout)
+        logging.exception("Error in bot.")
