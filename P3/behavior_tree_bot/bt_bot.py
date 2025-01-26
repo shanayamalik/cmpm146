@@ -6,54 +6,36 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
-from checks import (
-    if_neutral_planet_available,
-    have_largest_fleet,
-    is_under_attack,
-    have_strong_fleet,
-    safe_to_spread
-)
-
-from behaviors import (
-    defend_weakest_planet,
-    spread_to_strongest_neutral_planet,
-    attack_enemy_weakpoint,
-    spread_to_closest_neutral_planet
-)
-
+from checks import if_neutral_planet_available, is_under_attack, have_vulnerable_enemy_planet
+from behaviors import defend_weakest_planet, spread_to_strongest_neutral_planet, attack_enemy_weakpoint
 from bt_nodes import Selector, Sequence, Action, Check
 from planet_wars import PlanetWars, finish_turn
 
 def setup_behavior_tree():
     root = Selector(name='High Level Strategy')
 
+    aggressive_plan = Sequence(name='Aggressive Strategy')
+    enemy_vulnerable = Check(have_vulnerable_enemy_planet)
+    attack = Action(attack_enemy_weakpoint)
+    aggressive_plan.child_nodes = [enemy_vulnerable, attack]
+
+    production_plan = Sequence(name='Production Strategy')
+    neutral_available = Check(if_neutral_planet_available)
+    get_neutral = Action(spread_to_strongest_neutral_planet)
+    production_plan.child_nodes = [neutral_available, get_neutral]
+
     defensive_plan = Sequence(name='Defensive Strategy')
     under_attack = Check(is_under_attack)
     defend = Action(defend_weakest_planet)
     defensive_plan.child_nodes = [under_attack, defend]
 
-    production_plan = Sequence(name='Production Strategy')
-    neutral_available = Check(if_neutral_planet_available)
-    strongest_neutral = Action(spread_to_strongest_neutral_planet)
-    production_plan.child_nodes = [neutral_available, strongest_neutral]
-
-    aggressive_plan = Sequence(name='Aggressive Strategy')
-    strong_fleet = Check(have_strong_fleet)
-    strong_attack = Action(attack_enemy_weakpoint)
-    aggressive_plan.child_nodes = [strong_fleet, strong_attack]
-
-    fallback_plan = Sequence(name='Fallback Strategy')
-    safe_to_spread_check = Check(safe_to_spread)
-    spread = Action(spread_to_closest_neutral_planet)
-    fallback_plan.child_nodes = [safe_to_spread_check, spread]
-
-    root.child_nodes = [defensive_plan, production_plan, aggressive_plan, fallback_plan]
+    root.child_nodes = [aggressive_plan, production_plan, defensive_plan]
 
     logging.info('\n' + root.tree_to_string())
     return root
 
 def do_turn(state):
-    behavior_tree.execute(state)
+    behavior_tree.execute(planet_wars)
 
 if __name__ == '__main__':
     logging.basicConfig(filename=__file__[:-3] + '.log', filemode='w', level=logging.DEBUG)
