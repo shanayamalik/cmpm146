@@ -13,10 +13,11 @@ def have_vulnerable_enemy_planet(state):
         return False
 
     enemy_planets = state.enemy_planets()
+    
     for target in enemy_planets:
         distance = state.distance(my_strongest.ID, target.ID)
         required_ships = target.num_ships + distance * target.growth_rate + 1
-        if my_strongest.num_ships > required_ships * 1.3:  # 30% safety margin
+        if my_strongest.num_ships > required_ships * 1.2:  # 20% safety margin
             return True
     return False
 

@@ -1,56 +1,2021 @@
 INFO:root:
-Selector: High Level Ordering of Strategies
-| Sequence: Offensive Strategy
-| | Check: have_largest_fleet
-| | Action: attack_weakest_enemy_planet
-| Sequence: Spread Strategy
+Selector: High Level Strategy
+| Sequence: Aggressive Strategy
+| | Check: have_vulnerable_enemy_planet
+| | Action: attack_enemy_weakpoint
+| Sequence: Production Strategy
 | | Check: if_neutral_planet_available
-| | Action: spread_to_weakest_neutral_planet
-| Action: attack_weakest_enemy_planet
+| | Action: spread_to_strongest_neutral_planet
+| Sequence: Defensive Strategy
+| | Check: is_under_attack
+| | Action: defend_weakest_planet
 
-DEBUG:root:Executing:Selector: High Level Ordering of Strategies
-DEBUG:root:Executing:Sequence: Offensive Strategy
-DEBUG:root:Executing:Check: have_largest_fleet
-DEBUG:root:Result: Check: have_largest_fleet -> Failure
-DEBUG:root:Result: Sequence: Offensive Strategy -> Failure
-DEBUG:root:Executing:Sequence: Spread Strategy
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
 DEBUG:root:Executing:Check: if_neutral_planet_available
 DEBUG:root:Result: Check: if_neutral_planet_available -> Success
-DEBUG:root:Executing:Action: spread_to_weakest_neutral_planet
-DEBUG:root:Order:1 3 50.0
-DEBUG:root:Result: Action: spread_to_weakest_neutral_planet -> Success
-DEBUG:root:Result: Sequence: Spread Strategy -> Success
-DEBUG:root:Result: Selector: High Level Ordering of Strategies -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:1 18 6.0
+DEBUG:root:Order:1 12 14.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
 DEBUG:root:Finish turn
 
-DEBUG:root:Executing:Selector: High Level Ordering of Strategies
-DEBUG:root:Executing:Sequence: Offensive Strategy
-DEBUG:root:Executing:Check: have_largest_fleet
-DEBUG:root:Result: Check: have_largest_fleet -> Failure
-DEBUG:root:Result: Sequence: Offensive Strategy -> Failure
-DEBUG:root:Executing:Sequence: Spread Strategy
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
 DEBUG:root:Executing:Check: if_neutral_planet_available
 DEBUG:root:Result: Check: if_neutral_planet_available -> Success
-DEBUG:root:Executing:Action: spread_to_weakest_neutral_planet
-DEBUG:root:Result: Action: spread_to_weakest_neutral_planet -> Failure
-DEBUG:root:Result: Sequence: Spread Strategy -> Failure
-DEBUG:root:Executing:Action: attack_weakest_enemy_planet
-DEBUG:root:Result: Action: attack_weakest_enemy_planet -> Failure
-DEBUG:root:Result: Selector: High Level Ordering of Strategies -> Failure
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:1 11 14.0
+DEBUG:root:Order:1 17 6.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
 DEBUG:root:Finish turn
 
-DEBUG:root:Executing:Selector: High Level Ordering of Strategies
-DEBUG:root:Executing:Sequence: Offensive Strategy
-DEBUG:root:Executing:Check: have_largest_fleet
-DEBUG:root:Result: Check: have_largest_fleet -> Failure
-DEBUG:root:Result: Sequence: Offensive Strategy -> Failure
-DEBUG:root:Executing:Sequence: Spread Strategy
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
 DEBUG:root:Executing:Check: if_neutral_planet_available
 DEBUG:root:Result: Check: if_neutral_planet_available -> Success
-DEBUG:root:Executing:Action: spread_to_weakest_neutral_planet
-DEBUG:root:Order:1 4 30.0
-DEBUG:root:Result: Action: spread_to_weakest_neutral_planet -> Success
-DEBUG:root:Result: Sequence: Spread Strategy -> Success
-DEBUG:root:Result: Selector: High Level Ordering of Strategies -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:1 0 39.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Order:1 9 26.0
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Success
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:1 0 17.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:1 11 18.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Order:1 5 25.0
+DEBUG:root:Order:12 5 19.0
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Success
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Order:11 17 48.0
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Success
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:1 21 60.0
+DEBUG:root:Bad order:1 20.0 61.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:0 9 16.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:12 9 30.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:11 17 25.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Order:0 6 16.0
+DEBUG:root:Order:12 6 13.0
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Success
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:11 21 17.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:1 22 60.0
+DEBUG:root:Bad order:1 20.0 61.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:12 13 61.0
+DEBUG:root:Bad order:12 21.0 61.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:11 15 61.0
+DEBUG:root:Bad order:11 20.0 61.0
+DEBUG:root:Order:0 15 61.0
+DEBUG:root:Bad order:0 19.0 61.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Order:18 19 9.0
+DEBUG:root:Order:1 19 11.0
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Success
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:18 6 30.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Order:12 20 15.0
+DEBUG:root:Order:1 20 26.0
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Success
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:11 16 61.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:12 13 17.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:15 19 25.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:21 22 17.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:12 14 61.0
+DEBUG:root:Order:1 14 61.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:0 16 17.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:21 16 31.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Order:11 2 62.0
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Success
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:12 7 85.0
+DEBUG:root:Bad order:12 28.0 85.0
+DEBUG:root:Order:15 7 85.0
+DEBUG:root:Bad order:15 28.0 85.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:1 8 85.0
+DEBUG:root:Bad order:1 32.0 83.0
+DEBUG:root:Order:0 3 83.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:18 20 16.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:21 20 30.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Order:11 3 17.0
+DEBUG:root:Result: Action: defend_weakest_planet -> Success
+DEBUG:root:Result: Sequence: Defensive Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Success
+DEBUG:root:Executing:Action: defend_weakest_planet
+DEBUG:root:Result: Action: defend_weakest_planet -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:17 4 83.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Success
+DEBUG:root:Executing:Action: spread_to_strongest_neutral_planet
+DEBUG:root:Order:22 10 86.0
+DEBUG:root:Result: Action: spread_to_strongest_neutral_planet -> Success
+DEBUG:root:Result: Sequence: Production Strategy -> Success
+DEBUG:root:Result: Selector: High Level Strategy -> Success
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
+DEBUG:root:Finish turn
+
+DEBUG:root:Executing:Selector: High Level Strategy
+DEBUG:root:Executing:Sequence: Aggressive Strategy
+DEBUG:root:Executing:Check: have_vulnerable_enemy_planet
+DEBUG:root:Result: Check: have_vulnerable_enemy_planet -> Success
+DEBUG:root:Executing:Action: attack_enemy_weakpoint
+DEBUG:root:Result: Action: attack_enemy_weakpoint -> Failure
+DEBUG:root:Result: Sequence: Aggressive Strategy -> Failure
+DEBUG:root:Executing:Sequence: Production Strategy
+DEBUG:root:Executing:Check: if_neutral_planet_available
+DEBUG:root:Result: Check: if_neutral_planet_available -> Failure
+DEBUG:root:Result: Sequence: Production Strategy -> Failure
+DEBUG:root:Executing:Sequence: Defensive Strategy
+DEBUG:root:Executing:Check: is_under_attack
+DEBUG:root:Result: Check: is_under_attack -> Failure
+DEBUG:root:Result: Sequence: Defensive Strategy -> Failure
+DEBUG:root:Result: Selector: High Level Strategy -> Failure
 DEBUG:root:Finish turn
 
