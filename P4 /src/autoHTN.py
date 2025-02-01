@@ -2,33 +2,26 @@ import pyhop
 import json
 
 def make_operator(recipe_name, rule):
-    """Creates an operator function from a crafting rule"""
     def operator(state, ID):
-        # Check time
         if state.time.get(ID, 0) < rule["Time"]:
             return False
             
-        # Check requirements
         if "Requires" in rule:
             for item, qty in rule["Requires"].items():
                 if getattr(state, item).get(ID, 0) < qty:
                     return False
                     
-        # Check consumables
         if "Consumes" in rule:
             for item, qty in rule["Consumes"].items():
                 if getattr(state, item).get(ID, 0) < qty:
                     return False
         
-        # Create new state
         state.time[ID] -= rule["Time"]
         
-        # Handle consumption
         if "Consumes" in rule:
             for item, qty in rule["Consumes"].items():
                 getattr(state, item)[ID] -= qty
                 
-        # Handle production
         for item, qty in rule["Produces"].items():
             if not hasattr(state, item):
                 setattr(state, item, {})
@@ -41,7 +34,6 @@ def make_operator(recipe_name, rule):
     return operator
 
 def make_method(recipe_name, rule):
-    """Creates a method function to decompose tasks into subtasks"""
     produced_item = list(rule["Produces"].keys())[0]
     
     def method(state, ID, item):
@@ -50,17 +42,14 @@ def make_method(recipe_name, rule):
             
         subtasks = []
         
-        # Add requirements
         if "Requires" in rule:
             for item, qty in rule["Requires"].items():
                 subtasks.append(('have_enough', ID, item, qty))
                 
-        # Add consumables
         if "Consumes" in rule:
             for item, qty in rule["Consumes"].items():
                 subtasks.append(('have_enough', ID, item, qty))
                 
-        # Add operation
         subtasks.append((f"op_{recipe_name.replace(' ', '_')}", ID))
         
         return subtasks
@@ -69,7 +58,6 @@ def make_method(recipe_name, rule):
     return method
 
 def declare_operators(data):
-    """Declares all operators from recipes"""
     operators = []
     for recipe_name, recipe in data["Recipes"].items():
         op = make_operator(recipe_name, recipe)
@@ -77,33 +65,24 @@ def declare_operators(data):
     pyhop.declare_operators(*operators)
 
 def declare_methods(data):
-    """Declares all methods from recipes"""
     methods = []
     for recipe_name, recipe in data["Recipes"].items():
         if len(recipe["Produces"]) == 1:
             method = make_method(recipe_name, recipe)
             methods.append(method)
-    
-    # Sort methods to prefer simpler recipes first
-    methods.sort(key=lambda m: "punch" in m.__name__, reverse=True)
+    methods.sort(key=lambda m: ("punch" in m.__name__, len(m.__name__)))
     pyhop.declare_methods("produce", *methods)
 
 def check_enough(state, ID, item, num):
-    """Checks if we have enough of an item"""
     if not hasattr(state, item):
-        return [('produce', ID, item)]
+        setattr(state, item, {ID: 0})
     if getattr(state, item).get(ID, 0) >= num:
         return []
     return [('produce', ID, item)]
 
 def add_heuristic(data, ID):
-    """Adds a heuristic to prevent infinite recursion"""
     def heuristic(state, curr_task, tasks, plan, depth, calling_stack):
-        if state.time.get(ID, 0) < 0:
-            return True
-        if depth > 30:  # Prevent too much recursion
-            return True
-        return False
+        return state.time.get(ID, 0) < 0 or depth > 30
     pyhop.add_check(heuristic)
 
 pyhop.declare_methods('have_enough', check_enough)
@@ -112,14 +91,12 @@ if __name__ == '__main__':
     with open('crafting.json') as f:
         data = json.load(f)
         
-    print("\nTesting case (b): Given {}, achieve {'plank': 1} [time <= 300]")
-    
     state = pyhop.State('state')
-    state.time = {'agent': 300}
+    state.time = {'agent': 100}
     state.wood = {'agent': 0}
-    state.plank = {'agent': 0}
+    state.iron_pickaxe = {'agent': 0}
     
-    goals = [('have_enough', 'agent', 'plank', 1)]
+    goals = [('have_enough', 'agent', 'iron_pickaxe', 1)]
     
     declare_operators(data)
     declare_methods(data)
