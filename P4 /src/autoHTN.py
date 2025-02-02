@@ -1,4 +1,3 @@
-
 import pyhop
 import json
 
@@ -34,30 +33,6 @@ def make_operator(recipe_name, rule):
     operator.__name__ = "op_" + recipe_name.replace(" ", "_")
     return operator
 
-def make_method(recipe_name, rule):
-    produced_item = list(rule["Produces"].keys())[0]
-    
-    def method(state, ID, item):
-        if item != produced_item:
-            return False
-            
-        subtasks = []
-        
-        if "Requires" in rule:
-            for item, qty in rule["Requires"].items():
-                subtasks.append(('have_enough', ID, item, qty))
-                
-        if "Consumes" in rule:
-            for item, qty in rule["Consumes"].items():
-                subtasks.append(('have_enough', ID, item, qty))
-                
-        subtasks.append((f"op_{recipe_name.replace(' ', '_')}", ID))
-        
-        return subtasks
-        
-    method.__name__ = f"produce_{produced_item}_{recipe_name.replace(' ', '_')}"
-    return method
-
 def declare_operators(data):
     operators = []
     for recipe_name, recipe in data["Recipes"].items():
@@ -65,14 +40,26 @@ def declare_operators(data):
         operators.append(op)
     pyhop.declare_operators(*operators)
 
-def declare_methods(data):
-    methods = []
-    for recipe_name, recipe in data["Recipes"].items():
-        if len(recipe["Produces"]) == 1:
-            method = make_method(recipe_name, recipe)
-            methods.append(method)
-    methods.sort(key=lambda m: ("punch" in m.__name__, len(m.__name__)))
-    pyhop.declare_methods("produce", *methods)
+def get_recipe_methods(recipe_name, recipe):
+    def method(state, ID):
+        subtasks = []
+        
+        # Check if we already have the required tools
+        if "Requires" in recipe:
+            for item, qty in recipe["Requires"].items():
+                if getattr(state, item).get(ID, 0) < qty:
+                    subtasks.append(('have_enough', ID, item, qty))
+                    
+        # Get consumed materials
+        if "Consumes" in recipe:
+            for item, qty in recipe["Consumes"].items():
+                if getattr(state, item).get(ID, 0) < qty:
+                    subtasks.append(('have_enough', ID, item, qty))
+                    
+        subtasks.append((f"op_{recipe_name.replace(' ', '_')}", ID))
+        return subtasks
+        
+    return method
 
 def check_enough(state, ID, item, num):
     if not hasattr(state, item):
@@ -81,26 +68,106 @@ def check_enough(state, ID, item, num):
         return []
     return [('produce', ID, item)]
 
+def check_enough_punch(state, ID, item, num):
+    """Special method for getting basic wood"""
+    if item == 'wood':
+        return [('op_punch_for_wood', ID)]
+    return False
+
+def check_enough_wood_tools(state, ID, item, num):
+    """Method for using wooden tools"""
+    if item == 'wood' and state.wooden_axe.get(ID, 0) > 0:
+        return [('op_wooden_axe_for_wood', ID)]
+    return False
+
+def get_methods(recipe_name, recipe):
+    methods = []
+    produced_items = recipe["Produces"].keys()
+    for item in produced_items:
+        method = get_recipe_methods(recipe_name, recipe)
+        method.__name__ = f"produce_{item}_{recipe_name.replace(' ', '_')}"
+        methods.append((item, method))
+    return methods
+
+def declare_methods(data):
+    # Organize recipes by what they produce
+    item_methods = {}
+    for recipe_name, recipe in data["Recipes"].items():
+        for item, method in get_methods(recipe_name, recipe):
+            if item not in item_methods:
+                item_methods[item] = []
+            item_methods[item].append(method)
+            
+    # Sort methods to put simpler recipes first
+    for item, methods in item_methods.items():
+        if item == 'wood':
+            pyhop.declare_methods('have_enough', 
+                                check_enough_punch,
+                                check_enough_wood_tools,
+                                check_enough)
+        for method in methods:
+            pyhop.declare_methods(f'produce_{item}', method)
+            
+    # Create general produce method
+    def general_produce(state, ID, item):
+        if item == 'wood' and state.wooden_axe.get(ID, 0) == 0:
+            return [('op_punch_for_wood', ID)]
+        return [(f'produce_{item}', ID)]
+        
+    pyhop.declare_methods('produce', general_produce)
+
 def add_heuristic(data, ID):
     def heuristic(state, curr_task, tasks, plan, depth, calling_stack):
-        return state.time.get(ID, 0) < 0 or depth > 30
+        # Stop if we exceed depth or time
+        if depth > 15:
+            return True
+        if state.time.get(ID, 0) < 0:
+            return True
+            
+        # Track recipe attempts
+        if not hasattr(state, 'attempts'):
+            state.attempts = {ID: {}}
+            
+        task_str = str(curr_task)
+        if task_str in state.attempts.get(ID, {}):
+            if state.attempts[ID][task_str] > 2:
+                return True
+            state.attempts[ID][task_str] += 1
+        else:
+            state.attempts[ID][task_str] = 1
+            
+        return False
+        
     pyhop.add_check(heuristic)
-
-pyhop.declare_methods('have_enough', check_enough)
 
 if __name__ == '__main__':
     with open('crafting.json') as f:
         data = json.load(f)
         
     state = pyhop.State('state')
-    state.time = {'agent': 100}
-    state.wood = {'agent': 0}
-    state.iron_pickaxe = {'agent': 0}
+    state.time = {'agent': 175}
     
-    goals = [('have_enough', 'agent', 'iron_pickaxe', 1)]
+    # Initialize all required items
+    for item in ['cart', 'rail', 'ingot', 'ore', 'coal', 'cobble', 'wood', 'plank', 
+                'stick', 'bench', 'furnace', 'wooden_pickaxe', 'stone_pickaxe', 
+                'iron_pickaxe', 'wooden_axe', 'stone_axe', 'iron_axe']:
+        setattr(state, item, {'agent': 0})
+    
+    # Define goals
+    goals = [
+        ('have_enough', 'agent', 'wood', 1)  # Start with a simple goal to test
+    ]
     
     declare_operators(data)
     declare_methods(data)
     add_heuristic(data, 'agent')
     
-    pyhop.pyhop(state, goals, verbose=3)
+    print("\nStarting with simple wood gathering...")
+    plan = pyhop.pyhop(state, goals, verbose=3)
+    
+    if plan:
+        print("\nPlan found:")
+        for step in plan:
+            print(step)
+    else:
+        print("\nNo plan found.")
