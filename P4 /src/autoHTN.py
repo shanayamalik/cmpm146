@@ -98,13 +98,14 @@ def declare_methods(data):
                 item_methods[item] = []
             item_methods[item].append(method)
             
-    # Sort methods to put simpler recipes first
+    # Handle wood gathering methods
+    pyhop.declare_methods('have_enough', 
+                        check_enough_punch,
+                        check_enough_wood_tools,
+                        check_enough)
+    
+    # Create specific methods for each item
     for item, methods in item_methods.items():
-        if item == 'wood':
-            pyhop.declare_methods('have_enough', 
-                                check_enough_punch,
-                                check_enough_wood_tools,
-                                check_enough)
         for method in methods:
             pyhop.declare_methods(f'produce_{item}', method)
             
@@ -112,6 +113,10 @@ def declare_methods(data):
     def general_produce(state, ID, item):
         if item == 'wood' and state.wooden_axe.get(ID, 0) == 0:
             return [('op_punch_for_wood', ID)]
+        if item == 'plank':
+            return [('have_enough', ID, 'wood', 1), ('op_craft_plank', ID)]
+        if item == 'bench':
+            return [('have_enough', ID, 'plank', 4), ('op_craft_bench', ID)]
         return [(f'produce_{item}', ID)]
         
     pyhop.declare_methods('produce', general_produce)
@@ -119,7 +124,7 @@ def declare_methods(data):
 def add_heuristic(data, ID):
     def heuristic(state, curr_task, tasks, plan, depth, calling_stack):
         # Stop if we exceed depth or time
-        if depth > 15:
+        if depth > 20:  # Increased depth limit for more complex tasks
             return True
         if state.time.get(ID, 0) < 0:
             return True
@@ -153,21 +158,38 @@ if __name__ == '__main__':
                 'iron_pickaxe', 'wooden_axe', 'stone_axe', 'iron_axe']:
         setattr(state, item, {'agent': 0})
     
-    # Define goals
+    # Define goals - building up incrementally
     goals = [
-        ('have_enough', 'agent', 'wood', 1)  # Start with a simple goal to test
+        ('have_enough', 'agent', 'bench', 1)  # Need wood -> planks -> bench
     ]
     
     declare_operators(data)
     declare_methods(data)
     add_heuristic(data, 'agent')
     
-    print("\nStarting with simple wood gathering...")
+    print("\nTrying to craft a bench...")
     plan = pyhop.pyhop(state, goals, verbose=3)
     
     if plan:
         print("\nPlan found:")
         for step in plan:
             print(step)
+            
+        # Verify the plan works
+        print("\nVerifying plan...")
+        final_state = state
+        for step in plan:
+            operator = step[0]
+            # Find and execute the operator
+            for op in pyhop.operators.values():
+                if op.__name__ == operator:
+                    final_state = op(final_state, 'agent')
+                    break
+                    
+        print("\nFinal state:")
+        print(f"Time remaining: {final_state.time['agent']}")
+        print(f"Bench: {final_state.bench['agent']}")
+        print(f"Wood: {final_state.wood['agent']}")
+        print(f"Plank: {final_state.plank['agent']}")
     else:
         print("\nNo plan found.")
