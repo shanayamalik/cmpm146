@@ -163,11 +163,11 @@ if __name__ == '__main__':
     with open('crafting.json') as f:
         data = json.load(f)
     
-    # Test case D
+    # Test case E
     test_case = {
         'Initial': {},
-        'Goal': {'iron_pickaxe': 1},
-        'Time': 100
+        'Goal': {'cart': 1, 'rail': 10},
+        'Time': 175
     }
     
     state = set_up_state(data, test_case, 'agent', test_case['Time'])
