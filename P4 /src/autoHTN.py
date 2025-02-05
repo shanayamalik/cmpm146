@@ -22,7 +22,11 @@ def make_method(name, rule):
                 'iron_axe', 'stone_axe', 'wooden_axe', 'iron_pickaxe', 'wooden_pickaxe', 'stone_pickaxe']
         
         # Combine both required tools and consumed materials
-        needs = rule.get('Requires', {}) | rule.get('Consumes', {})
+        needs = {}
+        if 'Requires' in rule:
+            needs.update(rule['Requires'])
+        if 'Consumes' in rule:
+            needs.update(rule['Consumes'])
         
         # Create list to store subtasks
         subtasks = []
@@ -162,25 +166,62 @@ if __name__ == '__main__':
     # Load crafting rules
     with open('crafting.json') as f:
         data = json.load(f)
+        
+    test_cases = [
+        {
+            'name': 'Test Case A',
+            'Initial': {'plank': 1},
+            'Goal': {'plank': 1},
+            'Time': 0
+        },
+        {
+            'name': 'Test Case B',
+            'Initial': {},
+            'Goal': {'plank': 1},
+            'Time': 300
+        },
+        {
+            'name': 'Test Case C',
+            'Initial': {'plank': 3, 'stick': 2},
+            'Goal': {'wooden_pickaxe': 1},
+            'Time': 10
+        },
+        {
+            'name': 'Test Case D',
+            'Initial': {},
+            'Goal': {'iron_pickaxe': 1},
+            'Time': 100
+        },
+        {
+            'name': 'Test Case E',
+            'Initial': {},
+            'Goal': {'cart': 1, 'rail': 10},
+            'Time': 175
+        },
+        {
+            'name': 'Test Case F',
+            'Initial': {},
+            'Goal': {'cart': 1, 'rail': 20},
+            'Time': 250
+        }
+    ]
     
-    # Test case F
-    test_case = {
-        'Initial': {},
-        'Goal': {'cart': 1, 'rail': 20},  # Now need 20 rails instead of 10
-        'Time': 250                        # Increased time limit to 250
-    }
+    print("\nTesting HTN Planner for Minecraft Construction Tasks")
+    print("="*50)
     
-    state = set_up_state(data, test_case, 'agent', test_case['Time'])
-    data['Goal'] = test_case['Goal']
-    goals = set_up_goals(test_case, 'agent')
-    
-    declare_operators(data)
-    declare_methods(data)
-    add_heuristic(data, 'agent')
-    
-    solution = pyhop.pyhop(state, goals, verbose=3)
-    print("\nSolution found:", solution is not False)
-    if solution:
-        print("\nPlan:")
-        for step in solution:
-            print(f"  {step}")
+    for test_case in test_cases:
+        print(f"\nRunning {test_case['name']}")
+        print(f"Initial: {test_case['Initial']}")
+        print(f"Goal: {test_case['Goal']}")
+        print("-"*50)
+        
+        state = set_up_state(data, test_case, 'agent', test_case['Time'])
+        data['Goal'] = test_case['Goal']
+        goals = set_up_goals(test_case, 'agent')
+        
+        declare_operators(data)
+        declare_methods(data)
+        add_heuristic(data, 'agent')
+        
+        solution = pyhop.pyhop(state, goals, verbose=0)
+        print(f"Solution found: {solution is not False}")
