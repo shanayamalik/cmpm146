@@ -163,19 +163,36 @@ def set_up_goals(data, ID):
     return goals
 
 if __name__ == '__main__':
-    rules_filename = 'crafting.json'
-
-    with open(rules_filename) as f:
+    # Load crafting rules
+    with open('crafting.json') as f:
         data = json.load(f)
-
-    state = set_up_state(data, 'agent', time=239)
-    goals = set_up_goals(data, 'agent')
-
+        
+    # Define complex test case - starting simpler
+    test_case = {
+        'name': 'Complex Test Case',
+        'Initial': {},
+        'Goal': {'cart': 1, 'rail': 24, 'iron_pickaxe': 1},  # One cart, more rails, one pickaxe
+        'Time': 275
+    }
+    
+    print(f"\nRunning {test_case['name']}")
+    print(f"Initial: {test_case['Initial']}")
+    print(f"Goal: {test_case['Goal']}")
+    print("-"*50)
+    
+    # Set up planner state and goals
+    state = set_up_state(data, 'agent', test_case['Time'])
+    data['Goal'] = test_case['Goal']
+    goals = [('have_enough', 'agent', item, num) 
+             for item, num in test_case['Goal'].items()]
+    
+    # Initialize planner components
     declare_operators(data)
     declare_methods(data)
     add_heuristic(data, 'agent')
-
-    # Hint: verbose output can take a long time even if the solution is correct; 
-    # try verbose=1 if it is taking too long
-    pyhop.pyhop(state, goals, verbose=3)
-    # pyhop.pyhop(state, [('have_enough', 'agent', 'cart', 1),('have_enough', 'agent', 'rail', 20)], verbose=3)
+    
+    # Run planner with minimal verbose output to improve speed
+    solution = pyhop.pyhop(state, goals, verbose=0)
+    print(f"Solution found: {solution is not False}")
+    if solution:
+        print("Plan length:", len(solution))
