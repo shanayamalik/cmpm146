@@ -1,70 +1,40 @@
-# CMPM146: Programming Assignment IV
-# HTN Planning for Minecraft
+# CMPM146: Programming Assignment 4 - HTN Planning for Minecraft
 
-## File Overview
-manualHTN.py: Implements manual HTN operators and methods for wood gathering
-autoHTN.py: Contains programmatic HTN generation from JSON recipes
-crafting.json: Defines recipes, items, tools, and crafting rules
-pyhop.py: Core HTN planning implementation
-custom_case.txt: Extra credit - defines a complex custom test case
+### File Overview
+- `manualHTN.py`: Implements manual HTN operators and methods for wood gathering
+- `autoHTN.py`: Contains programmatic HTN generation from JSON recipes
+- `custom_case.txt`: Extra credit implementation with a complex test case
 
-## Implementation Details
+### Running the Program
+1. Manual HTN Test (Wood Gathering):
+   ```bash
+   python3.10 manualHTN.py
+   ```
 
-### Heuristic Design
-The planner implements several heuristics to optimize performance and prevent infinite loops:
+2. Automated HTN Tests:
+   ```bash
+   python3.10 autoHTN.py
+   ```
+
+3. Extra Credit Custom Case:
+   The custom_case.txt contains a complex crafting scenario that demonstrates the planner's capabilities within 30 seconds of real-world time execution. The case builds upon the existing test cases while introducing additional complexity and resource management challenges.
+
+### Heuristic Implementation
+The planner has several heuristics to optimize performance, including the following.
 
 1. Tool Creation Control
-- Prevents redundant tool crafting by tracking existing tools
-- Only creates tools when necessary based on task requirements
-- Avoids duplicate tool creation if one already exists
-- Prioritizes efficient tool progression paths
+- Prevents duplicate tool creation by tracking existing tools
+- Creates tools only when required by upcoming tasks
 
-2. Resource Optimization
-- Evaluates whether tools are needed based on resource quantity requirements
-- Creates wooden axe only when significant wood gathering is needed
-- Prioritizes faster gathering methods when tools are available
-- Optimizes resource usage based on recipe requirements
+2. Resource Gathering Optimization
+- Makes wooden axe only when significant wood gathering is required
+- Prioritizes more efficient gathering methods when tools are available
 
-3. Search Space Management
-- Prevents circular dependencies in material requirements
-- Implements strict priority ordering for crafting prerequisites
-- Groups related methods by their output products
-- Orders methods by time efficiency within groups
+3. Crafting Priority Management
+- Orders crafting prerequisites (bench, furnace first)
+- Prioritizes base materials before complex items
 
-4. Path Pruning
-- Prevents infinite cycles in tool requirements
-- Avoids unnecessary crafting paths
-- Optimizes tool progression sequences
-- Reduces search space by eliminating unproductive branches
-
-### Key Design Decisions
-
-1. Resource Management
-- Maintains accurate tracking of all resources and tools
-- Implements strict time accounting for operations
-- Verifies resource availability before operations
-- Ensures efficient resource allocation
-
-2. Task Organization
-- Uses priority ordering for crafting prerequisites
-- Groups related tasks for improved efficiency
-- Implements strategic task decomposition
-- Handles both direct crafting and preparation tasks
-
-3. Method Implementation
-- Groups methods by what they produce
-- Sorts methods by time efficiency within groups
-- Handles complex dependency chains
-- Implements intelligent task sequencing
-
-4. State Handling
-- Maintains accurate resource counting
-- Implements efficient state updates
-- Ensures proper time management
-- Tracks multiple concurrent resource states
-
-The implementation demonstrates effective HTN planning by:
-- Successfully handling all test cases within time constraints
-- Intelligently managing tool progression
-- Optimizing resource gathering and crafting
-- Maintaining efficient time usage throughout operations
+4. Search Space Pruning
+- Prevents infinite loops in tool requirements
+- Avoids redundant resource gathering
+- Handles circular dependencies in recipes
