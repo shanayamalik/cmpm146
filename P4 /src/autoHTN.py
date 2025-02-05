@@ -7,84 +7,84 @@ def check_enough(state, ID, item, num):
     return False
 
 def produce_enough(state, ID, item, num):
-    """Create tasks to produce an item and verify quantity."""
+    """Creates a sequence of tasks to produce an item and verify we have enough."""
     return [('produce', ID, item), ('have_enough', ID, item, num)]
 
 pyhop.declare_methods('have_enough', check_enough, produce_enough)
 
 def produce(state, ID, item):
-    """Create task to produce a specific item."""
+    """Creates a task to produce a specific item."""
     return [('produce_{}'.format(item), ID)]
 
 pyhop.declare_methods('produce', produce)
 
 def make_method(name, rule):
-    """Create HTN method for producing an item based on crafting rules."""
+    """Creates an HTN method for producing an item based on crafting rules."""
     def method(state, ID):
         # Priority order for materials
-        materials_order = ['bench', 'stick', 'plank', 'wood']
+        order = ['bench', 'furnace', 'ingot', 'ore', 'coal', 'cobble', 
+                'stick', 'plank', 'wood', 'iron_axe', 'stone_axe', 
+                'wooden_axe', 'iron_pickaxe', 'wooden_pickaxe', 'stone_pickaxe']
         
         # Combine requirements
-        requirements = {}
+        needs = {}
         if 'Requires' in rule:
-            requirements.update(rule['Requires'])
+            needs.update(rule['Requires'])
         if 'Consumes' in rule:
-            requirements.update(rule['Consumes'])
-            
-        # Create subtasks list
-        subtasks = []
+            needs.update(rule['Consumes'])
         
         # Sort items by priority
-        sorted_requirements = sorted(requirements.items(), 
-                                  key=lambda x: materials_order.index(x[0]) 
-                                  if x[0] in materials_order else len(materials_order))
+        items = sorted(needs.items(), 
+                      key=lambda x: order.index(x[0]) if x[0] in order 
+                      else len(order))
         
-        # Add requirements as subtasks
-        for item, amount in sorted_requirements:
+        # Build subtasks
+        subtasks = []
+        for item, amount in items:
             subtasks.append(('have_enough', ID, item, amount))
-            
-        # Add crafting operation
+        
+        # Add the crafting operation
         subtasks.append((f"op_{name.replace(' ', '_')}", ID))
         
         return subtasks
     return method
 
 def declare_methods(data):
-    """Declare crafting methods to pyhop."""
-    # Group methods by product
-    method_groups = {}
+    """Declares all crafting methods to pyhop."""
+    methods = {}
     
     for name, rule in data['Recipes'].items():
-        method = make_method(name, rule)
-        method.__name__ = name.replace(' ', '_')
+        m = make_method(name, rule)
+        m.__name__ = name.replace(' ', '_')
         
-        # Get product name
+        # Group methods by what they produce
         product = list(rule['Produces'].keys())[0]
         method_name = f"produce_{product}"
         
-        if method_name not in method_groups:
-            method_groups[method_name] = []
-        method_groups[method_name].append((method, rule['Time']))
+        if method_name not in methods:
+            methods[method_name] = [(m, rule['Time'])]
+        else:
+            methods[method_name].append((m, rule['Time']))
     
-    # Declare methods sorted by time
-    for method_name, methods in method_groups.items():
-        sorted_methods = sorted(methods, key=lambda x: x[1])
+    # Declare methods, faster ones first
+    for method_name, method_list in methods.items():
+        sorted_methods = sorted(method_list, key=lambda x: x[1])
         pyhop.declare_methods(method_name, *[m[0] for m in sorted_methods])
 
 def make_operator(rule):
-    """Create operator for primitive crafting action."""
+    """Creates a pyhop operator for primitive crafting actions."""
     def operator(state, ID):
         # Check time
         if state.time[ID] < rule['Time']:
             return False
-            
-        # Check requirements
+        
+        # Check required tools
         if 'Requires' in rule:
             for item, amount in rule['Requires'].items():
                 if getattr(state, item)[ID] < amount:
                     return False
         
-        # Check consumed materials
+        # Check materials
         if 'Consumes' in rule:
             for item, amount in rule['Consumes'].items():
                 if getattr(state, item)[ID] < amount:
@@ -101,12 +101,12 @@ def make_operator(rule):
         # Produce items
         for item, amount in rule['Produces'].items():
             getattr(state, item)[ID] += amount
-            
+        
         return state
     return operator
 
 def declare_operators(data):
-    """Declare all operators to pyhop."""
+    """Declares all operators to pyhop."""
     operators = []
     for name, rule in data['Recipes'].items():
         op = make_operator(rule)
@@ -115,20 +115,27 @@ def declare_operators(data):
     pyhop.declare_operators(*operators)
 
 def add_heuristic(data, ID):
-    """Add search optimization heuristics."""
+    """Adds search optimization heuristics."""
     def heuristic(state, curr_task, tasks, plan, depth, calling_stack):
-        # Prevent tool duplication
-        if curr_task[0].startswith('produce_') and curr_task[0][8:] in data['Tools']:
-            tool = curr_task[0][8:]
-            if getattr(state, tool)[ID] > 0:
+        # Prevent duplicate tool creation
+        if curr_task[0] == 'produce' and curr_task[2] in data['Tools']:
+            if getattr(state, curr_task[2])[ID] > 0:
                 return True
-                
-        # Prevent infinite recursion
-        if curr_task in calling_stack[:-1]:
-            return True
-            
-        return False
         
+        # Don't make wooden_axe for small wood tasks
+        if curr_task[0] == 'produce_wooden_axe':
+            wood_needed = sum(task[3] for task in tasks 
+                            if len(task) > 3 and task[2] == 'wood')
+            if wood_needed < 5 and 'wooden_axe' not in data['Goal']:
+                return True
+        
+        # Prevent cycles in tool requirements
+        if curr_task[0] == 'have_enough' and curr_task[2] in data['Tools']:
+            if tasks.count(curr_task) > 1:
+                return True
+        
+        return False
+    
     pyhop.add_check(heuristic)
 
 def set_up_state(data, ID, time=0):
@@ -141,10 +148,9 @@ def set_up_state(data, ID, time=0):
     for item in data['Tools']:
         setattr(state, item, {ID: 0})
     
-    # Set initial values from data
     for item, num in data['Initial'].items():
         getattr(state, item)[ID] = num
-        
+    
     return state
 
 def set_up_goals(data, ID):
@@ -153,30 +159,19 @@ def set_up_goals(data, ID):
             for item, num in data['Goal'].items()]
 
 if __name__ == '__main__':
-    # Load crafting rules
     with open('crafting.json') as f:
         data = json.load(f)
-        
-    # Set up test case (a)
-    test_case = {
-        'Initial': {'plank': 1},
-        'Goal': {'plank': 1},
-        'Time': 0
-    }
     
-    # Initialize state with test case
-    state = set_up_state(data, 'agent', test_case['Time'])
-    for item, num in test_case['Initial'].items():
-        getattr(state, item)['agent'] = num
-        
-    # Set up goals
-    goals = set_up_goals(test_case, 'agent')
+    state = set_up_state(data, 'agent', time=300)  # Set time for test case b
+    goals = set_up_goals(data, 'agent')
     
-    # Initialize planner
     declare_operators(data)
     declare_methods(data)
     add_heuristic(data, 'agent')
     
-    # Run planner
     solution = pyhop.pyhop(state, goals, verbose=3)
-    print("Solution found:", solution is not False)
+    print("\nSolution found:", solution is not False)
+    if solution:
+        print("\nPlan:")
+        for step in solution:
+            print(f"  {step}")
