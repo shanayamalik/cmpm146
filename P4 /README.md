@@ -21,19 +21,19 @@
 ### Heuristic Implementation
 The planner has several heuristics to optimize performance, including the following.
 
-## Tool Creation Control
+#### Tool Creation Control
 - Prevents duplicate tool creation by tracking existing tools
 - Creates tools only when required by upcoming tasks
 
-## Resource Gathering Optimization
+#### Resource Gathering Optimization
 - Makes wooden axe only when significant wood gathering is required
 - Prioritizes more efficient gathering methods when tools are available
 
-## Crafting Priority Management
+#### Crafting Priority Management
 - Orders crafting prerequisites (bench, furnace first)
 - Prioritizes base materials before complex items
 
-## Search Space Pruning
+#### Search Space Pruning
 - Prevents infinite loops in tool requirements
 - Avoids redundant resource gathering
 - Handles circular dependencies in recipes
