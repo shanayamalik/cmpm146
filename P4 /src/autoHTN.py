@@ -1,4 +1,3 @@
-
 import pyhop
 import json
 
@@ -164,11 +163,11 @@ if __name__ == '__main__':
     with open('crafting.json') as f:
         data = json.load(f)
     
-    # Test case E
+    # Test case F
     test_case = {
         'Initial': {},
-        'Goal': {'cart': 1, 'rail': 10},
-        'Time': 175
+        'Goal': {'cart': 1, 'rail': 20},  # Now need 20 rails instead of 10
+        'Time': 250                        # Increased time limit to 250
     }
     
     state = set_up_state(data, test_case, 'agent', test_case['Time'])
