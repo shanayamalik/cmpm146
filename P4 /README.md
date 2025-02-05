@@ -17,24 +17,23 @@
    ```
 
 3. Extra Credit Custom Case:
-   The custom_case.txt contains a complex crafting scenario that demonstrates the planner's capabilities within 30 seconds of real-world time execution. The case builds upon the existing test cases while introducing additional complexity and resource management challenges.
 
 ### Heuristic Implementation
 The planner has several heuristics to optimize performance, including the following.
 
-1. Tool Creation Control
+## Tool Creation Control
 - Prevents duplicate tool creation by tracking existing tools
 - Creates tools only when required by upcoming tasks
 
-2. Resource Gathering Optimization
+## Resource Gathering Optimization
 - Makes wooden axe only when significant wood gathering is required
 - Prioritizes more efficient gathering methods when tools are available
 
-3. Crafting Priority Management
+## Crafting Priority Management
 - Orders crafting prerequisites (bench, furnace first)
 - Prioritizes base materials before complex items
 
-4. Search Space Pruning
+## Search Space Pruning
 - Prevents infinite loops in tool requirements
 - Avoids redundant resource gathering
 - Handles circular dependencies in recipes
