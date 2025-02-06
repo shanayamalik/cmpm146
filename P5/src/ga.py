@@ -342,12 +342,29 @@ class Individual_DE(object):
 
 Individual = Individual_Grid
 
-
 def generate_successors(population):
     results = []
-    # STUDENT Design and implement this
-    # Hint: Call generate_children() on some individuals and fill up results.
-    return results
+    
+    # We'll use tournament selection with size 3
+    tournament_size = 3
+    
+    # Keep generating children until we match original population size
+    while len(results) < len(population):
+        # Tournament selection for parent 1
+        tournament1 = random.sample(population, tournament_size)
+        parent1 = max(tournament1, key=lambda x: x.fitness())
+        
+        # Tournament selection for parent 2
+        tournament2 = random.sample(population, tournament_size)
+        parent2 = max(tournament2, key=lambda x: x.fitness())
+        
+        # Generate children using the selected parents
+        # Note: generate_children returns a tuple of children
+        children = parent1.generate_children(parent2)
+        results.extend(children)
+    
+    # Ensure we don't exceed the original population size
+    return results[:len(population)]
 
 
 def ga():
