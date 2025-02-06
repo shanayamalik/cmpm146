@@ -344,7 +344,7 @@ Individual = Individual_Grid
 
 def generate_successors(population):
     """
-    Generate a new population of individuals using tournament selection.
+    Generate a new population of individuals using both tournament and roulette wheel selection.
     Args:
         population: List of individuals from the current generation
     Returns:
@@ -352,24 +352,53 @@ def generate_successors(population):
     """
     results = []
     
-    # Tournament selection parameters
+    # Selection strategy parameters
     tournament_size = 3  # Size of each tournament group
+    use_tournament = True  # Flag to alternate between strategies
+    
+    def roulette_wheel_selection(pop):
+        """Helper function for roulette wheel selection"""
+        # Calculate total fitness of population
+        total_fitness = sum(ind.fitness() for ind in pop)
+        
+        # Generate random value between 0 and total_fitness
+        pick = random.uniform(0, total_fitness)
+        current = 0
+        
+        # Find the individual that corresponds to this random value
+        for individual in pop:
+            current += individual.fitness()
+            if current > pick:
+                return individual
+                
+        # Fallback to last individual (shouldn't normally happen)
+        return pop[-1]
     
     # Keep generating children until matching original population size
     while len(results) < len(population):
-        # (Parent 1's Tournament Selection) Randomly sample tournament_size individuals and select the best one
-        tournament1 = random.sample(population, tournament_size)
-        parent1 = max(tournament1, key=lambda x: x.fitness())
-        
-        # (Parent 2's Tournament Selection) Using a separate tournament for diversity
-        tournament2 = random.sample(population, tournament_size)
-        parent2 = max(tournament2, key=lambda x: x.fitness())
+        if use_tournament:
+            # Tournament Selection
+            # (Parent 1's Tournament Selection) Randomly sample tournament_size individuals and select the best one
+            tournament1 = random.sample(population, tournament_size)
+            parent1 = max(tournament1, key=lambda x: x.fitness())
+            
+            # (Parent 2's Tournament Selection) Using a separate tournament for diversity
+            tournament2 = random.sample(population, tournament_size)
+            parent2 = max(tournament2, key=lambda x: x.fitness())
+        else:
+            # Roulette Wheel Selection
+            # Select parents based on fitness proportions
+            parent1 = roulette_wheel_selection(population)
+            parent2 = roulette_wheel_selection(population)
         
         # Generate children using the selected parents
         children = parent1.generate_children(parent2)
         
         # Add the children to the results
         results.extend(children)
+        
+        # Alternate between selection strategies
+        use_tournament = not use_tournament
     
     # Ensure original population size is not exceeded
     return results[:len(population)]
