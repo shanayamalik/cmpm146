@@ -1,0 +1,25 @@
+Given {}, achieve {'cart': 1, 'rail': 28, 'iron_pickaxe': 1} [time <= 300]
+
+Running Complex Test Case
+Initial: {}
+Goal: {'cart': 1, 'rail': 28, 'iron_pickaxe': 1}
+--------------------------------------------------
+Solution found: True
+Plan length: 87
+
+Task Description:
+Th complex case extends beyond the original test cases by requiring the creation of significantly more rails (28 vs. 20) while also needing to craft an iron pickaxe.
+
+Resource Challenges:
+- Gather and process large amounts of iron ore
+- Requires extensive coal mining for smelting
+
+Tool Progression:
+- Wooden tools for initial gathering
+- Stone tools for faster resource collection
+- Iron pickaxe crafting as final goal
+
+Solution:
+- Found valid solution with 87 steps
+- Recipe time cost: 300 time units
+- Real-world execution time: ~5 seconds
