@@ -167,12 +167,16 @@ if __name__ == '__main__':
     with open('crafting.json') as f:
         data = json.load(f)
         
-    # Define complex test case - starting simpler
+    # Define simpler test case
     test_case = {
         'name': 'Complex Test Case',
         'Initial': {},
-        'Goal': {'cart': 1, 'rail': 24, 'iron_pickaxe': 1},  # One cart, more rails, one pickaxe
-        'Time': 275
+        'Goal': {
+            'cart': 1,         # Reduced to one cart
+            'rail': 28,        # Keep rail requirement
+            'iron_pickaxe': 1  # Only one high-tier tool
+        },
+        'Time': 300
     }
     
     print(f"\nRunning {test_case['name']}")
