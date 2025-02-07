@@ -344,64 +344,58 @@ Individual = Individual_Grid
 
 def generate_successors(population):
     """
-    Generate a new population of individuals using both tournament and roulette wheel selection.
-    Args:
-        population: List of individuals from the current generation
-    Returns:
-        results: List of individuals for the next generation
+    Generate a new population of individuals using tournament and roulette wheel selection.
     """
     results = []
+    pop_size = len(population)
     
     # Selection strategy parameters
-    tournament_size = 3  # Size of each tournament group
-    use_tournament = True  # Flag to alternate between strategies
+    tournament_size = 5  # Increased for more selection pressure
+    tournament_probability = 0.7  # Use tournament selection 70% of the time
+    elitism_count = int(pop_size * 0.1)  # Preserve top 10% of population
     
-    def roulette_wheel_selection(pop):
-        """Helper function for roulette wheel selection"""
-        # Calculate total fitness of population
-        total_fitness = sum(ind.fitness() for ind in pop)
-        
-        # Generate random value between 0 and total_fitness
+    # Add elite individuals
+    sorted_population = sorted(population, key=lambda x: x.fitness(), reverse=True)
+    results.extend(sorted_population[:elitism_count])
+    
+    def tournament_select(pop):
+        """Tournament selection with tournament_size participants"""
+        tournament = random.sample(pop, tournament_size)
+        return max(tournament, key=lambda x: x.fitness())
+    
+    def roulette_select(pop):
+        """Roulette wheel selection based on fitness"""
+        total_fitness = sum(max(0, ind.fitness()) for ind in pop)
+        if total_fitness == 0:
+            return random.choice(pop)
+            
         pick = random.uniform(0, total_fitness)
         current = 0
         
-        # Find the individual that corresponds to this random value
         for individual in pop:
-            current += individual.fitness()
+            current += max(0, individual.fitness())
             if current > pick:
                 return individual
-                
-        # Fallback to last individual (shouldn't normally happen)
         return pop[-1]
     
-    # Keep generating children until matching original population size
-    while len(results) < len(population):
-        if use_tournament:
-            # Tournament Selection
-            # (Parent 1's Tournament Selection) Randomly sample tournament_size individuals and select the best one
-            tournament1 = random.sample(population, tournament_size)
-            parent1 = max(tournament1, key=lambda x: x.fitness())
-            
-            # (Parent 2's Tournament Selection) Using a separate tournament for diversity
-            tournament2 = random.sample(population, tournament_size)
-            parent2 = max(tournament2, key=lambda x: x.fitness())
+    # Keep generating children until reaching original population size
+    while len(results) < pop_size:
+        # Choose selection method
+        if random.random() < tournament_probability:
+            parent1 = tournament_select(population)
+            parent2 = tournament_select(population)
         else:
-            # Roulette Wheel Selection
-            # Select parents based on fitness proportions
-            parent1 = roulette_wheel_selection(population)
-            parent2 = roulette_wheel_selection(population)
+            parent1 = roulette_select(population)
+            parent2 = roulette_select(population)
         
-        # Generate children using the selected parents
+        # Generate and add children
         children = parent1.generate_children(parent2)
-        
-        # Add the children to the results
         results.extend(children)
         
-        # Alternate between selection strategies
-        use_tournament = not use_tournament
+        if len(results) > pop_size:
+            results = results[:pop_size]
     
-    # Ensure original population size is not exceeded
-    return results[:len(population)]
+    return results
 
 def ga():
     # STUDENT Feel free to play with this parameter
