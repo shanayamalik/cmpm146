@@ -102,6 +102,20 @@ class Individual_Grid(object):
         
         return (child,)
 
+    def _fix_structural_issues(self, genome, y):
+        """Fix any invalid tile combinations"""
+        for x in range(1, width-1):
+            # Fix floating pipes
+            if y < height-1 and genome[y][x] == "T":
+                genome[y+1][x] = "|"
+            elif y > 0 and genome[y][x] == "|" and genome[y-1][x] not in ["T", "|"]:
+                genome[y][x] = "-"
+            
+            # Prevent floating blocks (except coins and question blocks)
+            if y < height-1 and genome[y][x] == "X":
+                if genome[y+1][x] == "-":
+                    genome[y][x] = "-"
+
     # Turn the genome into a level string (easy for this genome)
     def to_level(self):
         return self.genome
