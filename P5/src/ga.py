@@ -480,11 +480,16 @@ def ga():
                     with open("levels/last.txt", 'w') as f:
                         for row in best.to_level():
                             f.write("".join(row) + "\n")
+                    
+                    # STUDENT Determine stopping condition
+                    stop_condition = (
+                        generation > 15 or       # Stop after 15 generations
+                        best.fitness() > 4.0     # Stop if we get a very good fitness score
+                    )
+                    if stop_condition:
+                        break
+                
                 generation += 1
-                # STUDENT Determine stopping condition
-                stop_condition = False
-                if stop_condition:
-                    break
                 # STUDENT Also consider using FI-2POP as in the Sorenson & Pasquier paper
                 gentime = time.time()
                 next_population = generate_successors(population)
