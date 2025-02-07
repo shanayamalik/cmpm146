@@ -62,17 +62,37 @@ class Individual_Grid(object):
             self.calculate_fitness()
         return self._fitness
 
-    # Mutate a genome into a new genome.  Note that this is a _genome_, not an individual!
     def mutate(self, genome):
-        # STUDENT implement a mutation operator, also consider not mutating this individual
-        # STUDENT also consider weighting the different tile types so it's not uniformly random
-        # STUDENT consider putting more constraints on this to prevent pipes in the air, etc
-
+        # Mutation probability per tile
+        mutation_rate = 0.02
+        
         left = 1
         right = width - 1
+        
         for y in range(height):
             for x in range(left, right):
-                pass
+                if random.random() < mutation_rate:
+                    # Different weights for different tiles
+                    weights = [
+                        0.55,  # "-" empty space (more common)
+                        0.15,  # "X" solid wall
+                        0.07,  # "?" question block
+                        0.03,  # "M" mushroom block
+                        0.05,  # "B" breakable block
+                        0.07,  # "o" coin
+                        0.04,  # "|" pipe segment
+                        0.02,  # "T" pipe top
+                        0.02   # "E" enemy
+                    ]
+                    
+                    # Select new tile based on weights
+                    genome[y][x] = random.choices(options, weights=weights)[0]
+                    
+                    # Fix structural issues after mutation
+                    if genome[y][x] in ["T", "|"]:
+                        if y < height-1:
+                            genome[y+1][x] = "|"  # Add pipe body below pipe top
+        
         return genome
 
     def generate_children(self, other):
