@@ -385,8 +385,8 @@ class Individual_DE(object):
         ]) for i in range(elt_count)]
         return Individual_DE(g)
 
-
-Individual = Individual_Grid
+Individual = Individual_DE
+#Individual = Individual_Grid
 
 def generate_successors(population):
     """
