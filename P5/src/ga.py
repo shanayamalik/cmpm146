@@ -477,6 +477,8 @@ def generate_successors(population):
     return results
 
 def ga():
+    best_fitness_history = []
+
     # STUDENT Feel free to play with this parameter
     pop_limit = 480
     # Code to parallelize some computations
