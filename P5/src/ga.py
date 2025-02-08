@@ -1,3 +1,4 @@
+
 import copy
 import heapq
 import metrics
@@ -38,44 +39,22 @@ class Individual_Grid(object):
 
     # Update this individual's estimate of its fitness.
     # This can be expensive so we do it once and then cache the result.
-    # Print out the possible measurements or look at the implementation of metri    cs.py for other keys:
-    #print(measurements.keys())
-    # Default fitness function: Just some arbitrary combination of a few criteri    a.  Is it good?  Who knows?
-    # STUDENT Modify this, and possibly add more metrics.  You can replace this     with whatever code you like.
-
     def calculate_fitness(self):
         measurements = metrics.metrics(self.to_level())
+        # Print out the possible measurements or look at the implementation of metrics.py for other keys:
+        # print(measurements.keys())
+        # Default fitness function: Just some arbitrary combination of a few criteria.  Is it good?  Who knows?
+        # STUDENT Modify this, and possibly add more metrics.  You can replace this with whatever code you like.
         coefficients = dict(
-            meaningfulJumpVariance=0.6,  # Increase jump variety importance
+            meaningfulJumpVariance=0.5,
             negativeSpace=0.6,
-            pathPercentage=0.7,  # More emphasis on playable paths
-            emptyPercentage=0.5,
-            linearity=-0.3,  # Reduce linearity penalty for more structured levels
-            solvability=2.5   # Heavily reward solvable levels
+            pathPercentage=0.5,
+            emptyPercentage=0.6,
+            linearity=-0.5,
+            solvability=2.0
         )
-        
-        # Apply basic fitness calculation
-        base_fitness = sum(map(lambda m: coefficients[m] * measurements[m], coefficients))
-        
-        # Add penalties/rewards based on design element composition
-        penalties = 0
-        
-        # Penalize too many stairs
-        if len(list(filter(lambda de: de[1] == "6_stairs", self.genome))) > 5:
-            penalties -= 2
-            
-        # Penalize too many enemies
-        enemy_count = len(list(filter(lambda de: de[1] == "2_enemy", self.genome)))
-        if enemy_count > 10:
-            penalties -= (enemy_count - 10) * 0.2
-            
-        # Reward coin-powerup balance
-        coin_count = len(list(filter(lambda de: de[1] == "3_coin", self.genome)))
-        powerup_count = len(list(filter(lambda de: de[1] == "5_qblock", self.genome)))
-        if 5 <= coin_count <= 15 and 2 <= powerup_count <= 5:
-            penalties += 1
-        
-        self._fitness = base_fitness + penalties
+        self._fitness = sum(map(lambda m: coefficients[m] * measurements[m],
+                                coefficients))
         return self
 
     # Return the cached fitness value or calculate it as needed.
@@ -226,20 +205,37 @@ class Individual_DE(object):
         # STUDENT Add more metrics?
         # STUDENT Improve this with any code you like
         coefficients = dict(
-            meaningfulJumpVariance=0.5,
+            meaningfulJumpVariance=0.6,  # Increase jump variety importance
             negativeSpace=0.6,
-            pathPercentage=0.5,
-            emptyPercentage=0.6,
-            linearity=-0.5,
-            solvability=2.0
+            pathPercentage=0.7,  # More emphasis on playable paths
+            emptyPercentage=0.5,
+            linearity=-0.3,  # Reduce linearity penalty for more structured levels
+            solvability=2.5   # Heavily reward solvable levels
         )
+        
+        # Apply basic fitness calculation
+        base_fitness = sum(map(lambda m: coefficients[m] * measurements[m], coefficients))
+        
+        # Add penalties/rewards based on design element composition
         penalties = 0
+        
         # STUDENT For example, too many stairs are unaesthetic.  Let's penalize that
         if len(list(filter(lambda de: de[1] == "6_stairs", self.genome))) > 5:
             penalties -= 2
+            
+        # Penalize too many enemies to maintain level playability
+        enemy_count = len(list(filter(lambda de: de[1] == "2_enemy", self.genome)))
+        if enemy_count > 10:
+            penalties -= (enemy_count - 10) * 0.2
+            
+        # Reward balanced distribution of coins and power-ups
+        coin_count = len(list(filter(lambda de: de[1] == "3_coin", self.genome)))
+        powerup_count = len(list(filter(lambda de: de[1] == "5_qblock", self.genome)))
+        if 5 <= coin_count <= 15 and 2 <= powerup_count <= 5:
+            penalties += 1
+            
         # STUDENT If you go for the FI-2POP extra credit, you can put constraint calculation in here too and cache it in a new entry in __slots__.
-        self._fitness = sum(map(lambda m: coefficients[m] * measurements[m],
-                                coefficients)) + penalties
+        self._fitness = base_fitness + penalties
         return self
 
     def fitness(self):
@@ -409,7 +405,7 @@ class Individual_DE(object):
     @classmethod
     def random_individual(_cls):
         # STUDENT Maybe enhance this
-        elt_count = random.randint(10,100)
+        elt_count = random.randint(1, 128)
         g = [random.choice([
             (random.randint(1, width - 2), "0_hole", random.randint(1, 8)),
             (random.randint(1, width - 2), "1_platform", random.randint(1, 8), random.randint(0, height - 1), random.choice(["?", "X", "B"])),
