@@ -516,8 +516,9 @@ def ga():
                     
                     # STUDENT Determine stopping condition
                     stop_condition = (
-                        generation > 15 or       # Stop after 15 generations
-                        best.fitness() > 4.0     # Stop if we get a very good fitness score
+                        generation > 15 or     # Either run for 15 generations
+                        (generation > 5 and     # After at least 5 generations
+                         len(set(best_fitness_history[-5:])) == 1) # No improvement in last 5 generations
                     )
                     if stop_condition:
                         break
