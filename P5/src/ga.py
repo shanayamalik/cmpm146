@@ -307,15 +307,30 @@ class Individual_DE(object):
 
     def generate_children(self, other):
         # STUDENT How does this work?  Explain it in your writeup.
+        # Handle case where either parent has empty genome
+        if len(self.genome) == 0 or len(other.genome) == 0:
+            # Create a new genome with one random element
+            g = [random.choice([
+                (random.randint(1, width - 2), "0_hole", random.randint(1, 8)),
+                (random.randint(1, width - 2), "1_platform", random.randint(1, 8), random.randint(0, height - 1), random.choice(["?", "X", "B"])),
+                (random.randint(1, width - 2), "2_enemy"),
+                (random.randint(1, width - 2), "3_coin", random.randint(0, height - 1)),
+                (random.randint(1, width - 2), "4_block", random.randint(0, height - 1), random.choice([True, False])),
+                (random.randint(1, width - 2), "5_qblock", random.randint(0, height - 1), random.choice([True, False])),
+                (random.randint(1, width - 2), "6_stairs", random.randint(1, height - 4), random.choice([-1, 1])),
+                (random.randint(1, width - 2), "7_pipe", random.randint(2, height - 4))
+            ])]
+            return Individual_DE(self.mutate(g)), Individual_DE(self.mutate(g))
+
+        # Original crossover code
         pa = random.randint(0, len(self.genome) - 1)
         pb = random.randint(0, len(other.genome) - 1)
-        a_part = self.genome[:pa] if len(self.genome) > 0 else []
-        b_part = other.genome[pb:] if len(other.genome) > 0 else []
+        a_part = self.genome[:pa]
+        b_part = other.genome[pb:]
         ga = a_part + b_part
-        b_part = other.genome[:pb] if len(other.genome) > 0 else []
-        a_part = self.genome[pa:] if len(self.genome) > 0 else []
+        b_part = other.genome[:pb]
+        a_part = self.genome[pa:]
         gb = b_part + a_part
-        # do mutation
         return Individual_DE(self.mutate(ga)), Individual_DE(self.mutate(gb))
 
     # Apply the DEs to a base level.
@@ -372,7 +387,7 @@ class Individual_DE(object):
     @classmethod
     def random_individual(_cls):
         # STUDENT Maybe enhance this
-        elt_count = random.randint(8, 128)
+        elt_count = random.randint(1, 128)
         g = [random.choice([
             (random.randint(1, width - 2), "0_hole", random.randint(1, 8)),
             (random.randint(1, width - 2), "1_platform", random.randint(1, 8), random.randint(0, height - 1), random.choice(["?", "X", "B"])),
