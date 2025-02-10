@@ -230,7 +230,10 @@ def metrics(levelStr):
                 'meaningfulJumpVariance': float(meaningfulJumpVariance) / float(pathcount),
                 'jumpVariance': float(jumpVariance) / float(pathcount),
                 'linearity': linearity,
-                'solvability': 1.0}
+                'solvability': 1.0,
+                'rhythm': calculate_rhythm_metric(levelStr),
+                'verticality': calculate_verticality(levelStr),
+                'powerup_distribution': calculate_powerup_distribution(levelStr)}
     else:
         return {
             'length': maxX,
