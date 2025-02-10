@@ -404,8 +404,30 @@ class Individual_DE(object):
 
     @classmethod
     def empty_individual(_cls):
-        # STUDENT Maybe enhance this
-        g = []
+        # Create a basic platforming structure
+        g = [
+            # Starting platform
+            (2, "1_platform", 4, 4, "X"),
+            
+            # Some strategically placed platforms
+            (int(width/6), "1_platform", 3, 5, "X"),
+            (int(width/3), "1_platform", 4, 6, "X"),
+            (int(width/2), "1_platform", 3, 5, "X"),
+            
+            # A few coins for guidance
+            (int(width/6) + 2, "3_coin", 4),
+            (int(width/3) + 2, "3_coin", 5),
+            
+            # Essential power-ups
+            (int(width/4), "5_qblock", 4, True),  # Question block with power-up
+            
+            # Some small gaps
+            (int(width/5), "0_hole", 2),
+            (int(width/2.5), "0_hole", 2),
+            
+            # A pipe
+            (int(width/3.5), "7_pipe", 3)
+        ]
         return Individual_DE(g)
 
     @classmethod
