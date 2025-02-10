@@ -246,6 +246,75 @@ def metrics(levelStr):
             'linearity': linearity,
             'solvability': 0}
 
+def calculate_rhythm_metric(levelStr):
+    """Measures the rhythmic spacing of challenges"""
+    maxY = len(levelStr)
+    maxX = len(levelStr[0])
+    challenge_positions = []
+    for x in range(maxX):
+        for y in range(maxY):
+            if levelStr[y][x] in ['E', '-'] or \
+               (y < maxY-1 and levelStr[y][x] in ['?', 'M', 'B'] and levelStr[y+1][x] == '-'):
+                challenge_positions.append(x)
+    
+    if len(challenge_positions) < 2:
+        return 0
+        
+    spacings = [challenge_positions[i+1] - challenge_positions[i] 
+               for i in range(len(challenge_positions)-1)]
+    
+    avg_spacing = sum(spacings) / len(spacings)
+    variance = sum((s - avg_spacing) ** 2 for s in spacings) / len(spacings)
+    
+    ideal_variance = 16
+    return 1.0 / (1.0 + abs(variance - ideal_variance))
+
+def calculate_verticality(levelStr):
+    """Measures how much vertical exploration is encouraged"""
+    maxY = len(levelStr)
+    maxX = len(levelStr[0])
+    height_utilization = [0] * maxX
+    for x in range(maxX):
+        solid_found = False
+        max_height = 0
+        for y in range(maxY-2, -1, -1):
+            if levelStr[y][x] in ['X', '?', 'M', 'B', '|', 'T']:
+                if not solid_found:
+                    solid_found = True
+                max_height = maxY - y
+        height_utilization[x] = max_height if solid_found else 0
+    
+    valid_heights = [h for h in height_utilization if h > 0]
+    if not valid_heights:
+        return 0
+    avg_height = sum(valid_heights) / len(valid_heights)
+    height_variety = sum(1 for h in valid_heights if abs(h - avg_height) > 2)
+    
+    return min(1.0, height_variety / (maxX * 0.3))
+
+def calculate_powerup_distribution(levelStr):
+    """Evaluates the distribution of powerups and their accessibility"""
+    maxY = len(levelStr)
+    maxX = len(levelStr[0])
+    powerup_positions = []
+    for x in range(maxX):
+        for y in range(maxY):
+            if levelStr[y][x] == 'M':
+                powerup_positions.append((x, y))
+    
+    if not powerup_positions:
+        return 0
+        
+    x_positions = sorted([p[0] for p in powerup_positions])
+    if len(x_positions) < 2:
+        spacing_score = 1.0
+    else:
+        spacings = [x_positions[i+1] - x_positions[i] for i in range(len(x_positions)-1)]
+        avg_spacing = sum(spacings) / len(spacings)
+        ideal_spacing = maxX * 0.25
+        spacing_score = 1.0 / (1.0 + abs(avg_spacing - ideal_spacing))
+    
+    return spacing_score
 
 if __name__ == "__main__":
     name = sys.argv[1]
