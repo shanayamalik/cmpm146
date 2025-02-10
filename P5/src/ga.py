@@ -578,9 +578,22 @@ def ga():
     with mpool.Pool(processes=os.cpu_count()) as pool:
         init_time = time.time()
         # STUDENT (Optional) change population initialization
-        population = [Individual.random_individual() if random.random() < 0.9
-                      else Individual.empty_individual()
-                      for _g in range(pop_limit)]
+        population = []
+        for _ in range(pop_limit):
+            r = random.random()
+            if r < 0.6:  # 60% random individuals
+                ind = Individual.random_individual()
+                while len(ind.genome) < 20:  # Ensure minimum complexity
+                    ind = Individual.random_individual()
+                population.append(ind)
+            elif r < 0.9:  # 30% empty individuals with basic structure
+                base = Individual.empty_individual()
+                # Add some random elements to the basic structure
+                additional = Individual.random_individual()
+                base.genome.extend(list(filter(lambda x: x[0] > width/3, additional.genome[:10])))
+                population.append(base)
+            else:  # 10% completely empty individuals for diversity
+                population.append(Individual.empty_individual())
         # But leave this line alone; we have to reassign to population because we get a new population that has more cached stuff in it.
         population = pool.map(Individual.calculate_fitness,
                               population,
