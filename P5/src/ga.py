@@ -170,6 +170,67 @@ class Individual_Grid(object):
         g[14:16][-1] = ["X", "X"]
         return cls(g)
 
+    @classmethod
+    def random_individual(_cls):
+        # More controlled element count
+        elt_count = random.randint(20, 50)  # Ensures enough elements for interesting levels
+        
+        # Define element probabilities
+        elements = [
+            # Format: (probability, creation_function)
+            (0.25, lambda: (random.randint(1, width - 2), "1_platform", 
+                           random.randint(3, 6), # width
+                           random.randint(4, height - 4), # height
+                           random.choice(["X", "B"]))), # platform type
+            
+            (0.15, lambda: (random.randint(1, width - 2), "3_coin", 
+                           random.randint(3, height - 3))), # coins
+            
+            (0.15, lambda: (random.randint(1, width - 2), "5_qblock", 
+                           random.randint(3, height - 3),
+                           random.choice([True, False]))), # power-ups
+            
+            (0.15, lambda: (random.randint(1, width - 2), "4_block", 
+                           random.randint(3, height - 3),
+                           True)), # breakable blocks
+            
+            (0.10, lambda: (random.randint(1, width - 2), "0_hole", 
+                           random.randint(2, 4))), # small gaps
+            
+            (0.08, lambda: (random.randint(1, width - 2), "2_enemy")), # enemies
+            
+            (0.07, lambda: (random.randint(1, width - 2), "7_pipe", 
+                           random.randint(2, 4))), # pipes
+            
+            (0.05, lambda: (random.randint(1, width - 2), "6_stairs", 
+                           random.randint(2, 4),
+                           random.choice([-1, 1]))) # stairs
+        ]
+        
+        g = []
+        used_positions = set()
+        
+        # Generate elements
+        for _ in range(elt_count):
+            # Select element type based on probabilities
+            total = sum(prob for prob, _ in elements)
+            r = random.uniform(0, total)
+            acc = 0
+            
+            for prob, create_fn in elements:
+                acc += prob
+                if r <= acc:
+                    # Try to find unused position
+                    for _ in range(10):  # Maximum attempts
+                        element = create_fn()
+                        x_pos = element[0]
+                        if x_pos not in used_positions:
+                            used_positions.add(x_pos)
+                            g.append(element)
+                            break
+                    break
+        
+         return Individual_DE(g)
 
 def offset_by_upto(val, variance, min=None, max=None):
     val += random.normalvariate(0, variance**0.5)
