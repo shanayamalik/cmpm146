@@ -219,37 +219,44 @@ def metrics(levelStr):
     slope, intercept, r_value, p_value, std_err = stats.linregress(x, y)
     linearity = np.abs(r_value)
     if len(paths) > 0:
+        # Calculate these values only if pathcount is not zero
+        meaningful_jumps = float(totalMeaningfulJumps) / float(pathcount) if pathcount > 0 else 0
+        total_jumps = float(totalJumps) / float(pathcount) if pathcount > 0 else 0
+        meaningful_variance = float(meaningfulJumpVariance) / float(pathcount) if pathcount > 0 else 0
+        jump_variance = float(jumpVariance) / float(pathcount) if pathcount > 0 else 0
+        
         return {'length': maxX,
                 'negativeSpace': negativeSpace,
                 'pathPercentage': pathPercentage,
                 'emptyPercentage': emptyPercentage,
                 'decorationPercentage': decorationPercentage,
                 'leniency': leniency,
-                'meaningfulJumps': float(totalMeaningfulJumps) / float(pathcount),
-                'jumps': float(totalJumps) / float(pathcount),
-                'meaningfulJumpVariance': float(meaningfulJumpVariance) / float(pathcount),
-                'jumpVariance': float(jumpVariance) / float(pathcount),
+                'meaningfulJumps': meaningful_jumps,
+                'jumps': total_jumps,
+                'meaningfulJumpVariance': meaningful_variance,
+                'jumpVariance': jump_variance,
                 'linearity': linearity,
                 'solvability': 1.0,
                 'rhythm': calculate_rhythm_metric(levelStr),
                 'verticality': calculate_verticality(levelStr),
                 'powerup_distribution': calculate_powerup_distribution(levelStr)}
     else:
-        return {'length': maxX,
-                'negativeSpace': negativeSpace,
-                'pathPercentage': pathPercentage,
-                'emptyPercentage': emptyPercentage,
-                'decorationPercentage': decorationPercentage,
-                'leniency': leniency,
-                'meaningfulJumps': float(totalMeaningfulJumps) / float(pathcount),
-                'jumps': float(totalJumps) / float(pathcount),
-                'meaningfulJumpVariance': float(meaningfulJumpVariance) / float(pathcount),
-                'jumpVariance': float(jumpVariance) / float(pathcount),
-                'linearity': linearity,
-                'solvability': 1.0,
-                'rhythm': calculate_rhythm_metric(levelStr),
-                'verticality': calculate_verticality(levelStr),
-                'powerup_distribution': calculate_powerup_distribution(levelStr)}
+        return {
+            'length': maxX,
+            'negativeSpace': negativeSpace,
+            'pathPercentage': -1,
+            'emptyPercentage': emptyPercentage,
+            'decorationPercentage': decorationPercentage,
+            'leniency': leniency,
+            'meaningfulJumps': 0,
+            'jumps': 0,
+            'meaningfulJumpVariance': 0,
+            'jumpVariance': 0,
+            'linearity': linearity,
+            'solvability': 0,
+            'rhythm': calculate_rhythm_metric(levelStr),
+            'verticality': calculate_verticality(levelStr),
+            'powerup_distribution': calculate_powerup_distribution(levelStr)}
 
 def calculate_rhythm_metric(levelStr):
     """Measures the rhythmic spacing of challenges"""
