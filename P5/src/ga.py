@@ -198,46 +198,70 @@ class Individual_DE(object):
         heapq.heapify(self.genome)
         self._fitness = None
         self._level = None
-
-    # Calculate and cache fitness
+        
     def calculate_fitness(self):
         measurements = metrics.metrics(self.to_level())
-        # Default fitness function: Just some arbitrary combination of a few criteria.  Is it good?  Who knows?
-        # STUDENT Add more metrics?
-        # STUDENT Improve this with any code you like
+    
         coefficients = dict(
-            meaningfulJumpVariance=0.6,  
-            negativeSpace=0.6,           
-            pathPercentage=0.7,          
-            emptyPercentage=0.5,         
-            linearity=-0.3,              
-            solvability=2.5,             
-            rhythm=0.8,                  
-            verticality=0.7,             
-            powerup_distribution=0.6     
+            meaningfulJumpVariance=2.0,    # Doubled - encourage varied jump challenges
+            negativeSpace=1.5,             # Increased for better space usage
+            pathPercentage=2.0,            # Doubled - heavily reward playable paths
+            emptyPercentage=1.0,           # Kept moderate
+            linearity=-0.2,                # Reduced penalty for non-linearity
+            solvability=4.0,               # Much higher weight on solvability
+            rhythm=2.0,                    # Strong emphasis on pacing
+            verticality=2.0,               # Encourage vertical exploration
+            powerup_distribution=1.5       # Better powerup placement
         )
-        
+    
         # Apply basic fitness calculation
         base_fitness = sum(map(lambda m: coefficients[m] * measurements[m], coefficients))
         
-        # Add penalties/rewards based on design element composition
+        # Enhanced penalties/rewards
         penalties = 0
         
-        # STUDENT For example, too many stairs are unaesthetic.  Let's penalize that
-        if len(list(filter(lambda de: de[1] == "6_stairs", self.genome))) > 5:
-            penalties -= 2
-            
-        # Penalize too many enemies to maintain level playability
+        # Count various elements
         enemy_count = len(list(filter(lambda de: de[1] == "2_enemy", self.genome)))
-        if enemy_count > 10:
-            penalties -= (enemy_count - 10) * 0.2
-            
-        # Reward balanced distribution of coins and power-ups
         coin_count = len(list(filter(lambda de: de[1] == "3_coin", self.genome)))
         powerup_count = len(list(filter(lambda de: de[1] == "5_qblock", self.genome)))
-        if 5 <= coin_count <= 15 and 2 <= powerup_count <= 5:
-            penalties += 1
+        platform_count = len(list(filter(lambda de: de[1] == "1_platform", self.genome)))
+        stairs_count = len(list(filter(lambda de: de[1] == "6_stairs", self.genome)))
+        pipe_count = len(list(filter(lambda de: de[1] == "7_pipe", self.genome)))
+        
+        # Reward good distributions
+        if 4 <= enemy_count <= 8:
+            penalties += 3.0
+        if 8 <= coin_count <= 15:
+            penalties += 2.0
+        if 2 <= powerup_count <= 4:
+            penalties += 2.0
+        if 6 <= platform_count <= 12:
+            penalties += 3.0
+        if 2 <= stairs_count <= 4:
+            penalties += 2.0
+        if 2 <= pipe_count <= 4:
+            penalties += 2.0
             
+        # Penalize excessive elements
+        if enemy_count > 10:
+            penalties -= (enemy_count - 10) * 0.5
+        if stairs_count > 5:
+            penalties -= (stairs_count - 5) * 1.0
+        if pipe_count > 6:
+            penalties -= (pipe_count - 6) * 0.5
+            
+        # Reward good level structure
+        if platform_count > 0 and coin_count > 0 and powerup_count > 0:
+            penalties += 4.0  # Basic completeness bonus
+            
+        # Spatial distribution bonus
+        used_x_positions = set()
+        for de in self.genome:
+            x_pos = de[0]
+            used_x_positions.add(x_pos // 20)  # Divide level into sections
+        coverage = len(used_x_positions) / (width // 20)
+        penalties += coverage * 3.0  # Reward using full level width
+
         # STUDENT If you go for the FI-2POP extra credit, you can put constraint calculation in here too and cache it in a new entry in __slots__.
         self._fitness = base_fitness + penalties
         return self
@@ -593,6 +617,7 @@ def ga():
                 # Print out statistics
                 if generation > 0:
                     best = max(population, key=Individual.fitness)
+                    best_fitness_history.append(best.fitness())
                     print("Generation:", str(generation))
                     print("Max fitness:", str(best.fitness()))
                     print("Average generation time:", (now - start) / generation)
