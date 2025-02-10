@@ -48,11 +48,15 @@ class Individual_Grid(object):
         coefficients = dict(
             meaningfulJumpVariance=0.5,
             negativeSpace=0.6,
-            pathPercentage=0.5,
-            emptyPercentage=0.6,
-            linearity=-0.5,
-            solvability=2.0
+            pathPercentage=0.6,
+            emptyPercentage=0.5,
+            linearity=-0.4,
+            solvability=2.0,
+            rhythm=0.7,                  # Slightly lower for grid-based levels
+            verticality=0.8,             # Higher to encourage interesting grid structures
+            powerup_distribution=0.5     # Moderate distribution importance
         )
+
         self._fitness = sum(map(lambda m: coefficients[m] * measurements[m],
                                 coefficients))
         return self
