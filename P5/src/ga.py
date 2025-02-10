@@ -1,4 +1,3 @@
-
 import copy
 import heapq
 import metrics
@@ -52,9 +51,9 @@ class Individual_Grid(object):
             emptyPercentage=0.5,
             linearity=-0.4,
             solvability=2.0,
-            rhythm=0.7,                  # Slightly lower for grid-based levels
-            verticality=0.8,             # Higher to encourage interesting grid structures
-            powerup_distribution=0.5     # Moderate distribution importance
+            rhythm=0.7,                  
+            verticality=0.8,             
+            powerup_distribution=0.5     
         )
 
         self._fitness = sum(map(lambda m: coefficients[m] * measurements[m],
@@ -209,12 +208,15 @@ class Individual_DE(object):
         # STUDENT Add more metrics?
         # STUDENT Improve this with any code you like
         coefficients = dict(
-            meaningfulJumpVariance=0.6,  # Increase jump variety importance
-            negativeSpace=0.6,
-            pathPercentage=0.7,  # More emphasis on playable paths
-            emptyPercentage=0.5,
-            linearity=-0.3,  # Reduce linearity penalty for more structured levels
-            solvability=2.5   # Heavily reward solvable levels
+            meaningfulJumpVariance=0.6,  
+            negativeSpace=0.6,           
+            pathPercentage=0.7,          
+            emptyPercentage=0.5,         
+            linearity=-0.3,              
+            solvability=2.5,             
+            rhythm=0.8,                  
+            verticality=0.7,             
+            powerup_distribution=0.6     
         )
         
         # Apply basic fitness calculation
