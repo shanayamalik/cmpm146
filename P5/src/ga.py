@@ -190,7 +190,7 @@ def clip(lo, val, hi):
 
 class Individual_DE(object):
     # Calculating the level isn't cheap either so we cache it too.
-    __slots__ = ["genome", "_fitness", "_level"]
+    __slots__ = ["genome", "_fitness", "_level", "_solvable"]  # Added _solvable as part of FI-2POP
 
     # Genome is a heapq of design elements sorted by X, then type, then other parameters
     def __init__(self, genome):
@@ -201,69 +201,95 @@ class Individual_DE(object):
         
     def calculate_fitness(self):
         measurements = metrics.metrics(self.to_level())
-    
-        coefficients = dict(
-            meaningfulJumpVariance=2.0,    # Doubled - encourage varied jump challenges
-            negativeSpace=1.5,             # Increased for better space usage
-            pathPercentage=2.0,            # Doubled - heavily reward playable paths
-            emptyPercentage=1.0,           # Kept moderate
-            linearity=-0.2,                # Reduced penalty for non-linearity
-            solvability=4.0,               # Much higher weight on solvability
-            rhythm=2.0,                    # Strong emphasis on pacing
-            verticality=2.0,               # Encourage vertical exploration
-            powerup_distribution=1.5       # Better powerup placement
-        )
-    
-        # Apply basic fitness calculation
-        base_fitness = sum(map(lambda m: coefficients[m] * measurements[m], coefficients))
         
-        # Enhanced penalties/rewards
-        penalties = 0
+        # Check solvability first
+        self._solvable = measurements['solvability'] == 1.0
         
-        # Count various elements
-        enemy_count = len(list(filter(lambda de: de[1] == "2_enemy", self.genome)))
-        coin_count = len(list(filter(lambda de: de[1] == "3_coin", self.genome)))
-        powerup_count = len(list(filter(lambda de: de[1] == "5_qblock", self.genome)))
-        platform_count = len(list(filter(lambda de: de[1] == "1_platform", self.genome)))
-        stairs_count = len(list(filter(lambda de: de[1] == "6_stairs", self.genome)))
-        pipe_count = len(list(filter(lambda de: de[1] == "7_pipe", self.genome)))
+        if self._solvable:
+            # Fitness for feasible (solvable) levels
+            coefficients = dict(
+                meaningfulJumpVariance=2.0,    
+                negativeSpace=1.5,             
+                pathPercentage=2.0,            
+                emptyPercentage=1.0,           
+                linearity=-0.2,                
+                solvability=4.0,               
+                rhythm=2.0,                    
+                verticality=2.0,               
+                powerup_distribution=1.5       
+            )
+            
+            # Apply basic fitness calculation
+            base_fitness = sum(map(lambda m: coefficients[m] * measurements[m], coefficients))
+            
+            # Enhanced penalties/rewards for feasible levels
+            penalties = 0
+            
+            # Count various elements
+            enemy_count = len(list(filter(lambda de: de[1] == "2_enemy", self.genome)))
+            coin_count = len(list(filter(lambda de: de[1] == "3_coin", self.genome)))
+            powerup_count = len(list(filter(lambda de: de[1] == "5_qblock", self.genome)))
+            platform_count = len(list(filter(lambda de: de[1] == "1_platform", self.genome)))
+            stairs_count = len(list(filter(lambda de: de[1] == "6_stairs", self.genome)))
+            pipe_count = len(list(filter(lambda de: de[1] == "7_pipe", self.genome)))
+            
+            # Reward good distributions
+            if 4 <= enemy_count <= 8:
+                penalties += 3.0
+            if 8 <= coin_count <= 15:
+                penalties += 2.0
+            if 2 <= powerup_count <= 4:
+                penalties += 2.0
+            if 6 <= platform_count <= 12:
+                penalties += 3.0
+            if 2 <= stairs_count <= 4:
+                penalties += 2.0
+            if 2 <= pipe_count <= 4:
+                penalties += 2.0
+                
+            # Penalize excessive elements
+            if enemy_count > 10:
+                penalties -= (enemy_count - 10) * 0.5
+            if stairs_count > 5:
+                penalties -= (stairs_count - 5) * 1.0
+            if pipe_count > 6:
+                penalties -= (pipe_count - 6) * 0.5
+                
+            # Spatial distribution bonus
+            used_x_positions = set()
+            for de in self.genome:
+                x_pos = de[0]
+                used_x_positions.add(x_pos // 20)
+            coverage = len(used_x_positions) / (width // 20)
+            penalties += coverage * 3.0
+            
+            self._fitness = base_fitness + penalties
+            
+        else:
+            # Fitness for infeasible (unsolvable) levels - focus on making them closer to being solvable
+            coefficients = dict(
+                negativeSpace=1.0,          # Encourage open spaces
+                pathPercentage=3.0,         # Heavily reward potential paths
+                emptyPercentage=1.0,        # Moderate empty space
+                decorationPercentage=0.5,   # Some decoration
+                linearity=-0.1,             # Very small penalty for non-linearity
+                meaningfulJumps=2.0         # Encourage proper jump distances
+            )
+            
+            # Calculate infeasible fitness
+            base_fitness = sum(map(lambda m: coefficients[m] * measurements[m], coefficients))
+            
+            # Add potential path bonuses
+            if measurements['pathPercentage'] > 0.5:  # If more than half the level is potentially traversable
+                base_fitness *= 1.5
+                
+            # Reward levels that are close to being solvable
+            platform_count = len(list(filter(lambda de: de[1] == "1_platform", self.genome)))
+            if platform_count >= 4:  # Minimum platforms for potential solvability
+                base_fitness += 2.0
+                
+            self._fitness = base_fitness
         
-        # Reward good distributions
-        if 4 <= enemy_count <= 8:
-            penalties += 3.0
-        if 8 <= coin_count <= 15:
-            penalties += 2.0
-        if 2 <= powerup_count <= 4:
-            penalties += 2.0
-        if 6 <= platform_count <= 12:
-            penalties += 3.0
-        if 2 <= stairs_count <= 4:
-            penalties += 2.0
-        if 2 <= pipe_count <= 4:
-            penalties += 2.0
-            
-        # Penalize excessive elements
-        if enemy_count > 10:
-            penalties -= (enemy_count - 10) * 0.5
-        if stairs_count > 5:
-            penalties -= (stairs_count - 5) * 1.0
-        if pipe_count > 6:
-            penalties -= (pipe_count - 6) * 0.5
-            
-        # Reward good level structure
-        if platform_count > 0 and coin_count > 0 and powerup_count > 0:
-            penalties += 4.0  # Basic completeness bonus
-            
-        # Spatial distribution bonus
-        used_x_positions = set()
-        for de in self.genome:
-            x_pos = de[0]
-            used_x_positions.add(x_pos // 20)  # Divide level into sections
-        coverage = len(used_x_positions) / (width // 20)
-        penalties += coverage * 3.0  # Reward using full level width
-
-        # STUDENT If you go for the FI-2POP extra credit, you can put constraint calculation in here too and cache it in a new entry in __slots__.
-        self._fitness = base_fitness + penalties
         return self
 
     def fitness(self):
@@ -574,83 +600,126 @@ def generate_successors(population):
 
 def ga():
     best_fitness_history = []
-
+    
     # STUDENT Feel free to play with this parameter
-    pop_limit = 480
-    # Code to parallelize some computations
+    pop_limit = 480  # Total population size
+    f_pop_size = pop_limit // 2  # Size of feasible population
+    i_pop_size = pop_limit - f_pop_size  # Size of infeasible population
+    
     batches = os.cpu_count()
-    if pop_limit % batches != 0:
-        print("It's ideal if pop_limit divides evenly into " + str(batches) + " batches.")
     batch_size = int(math.ceil(pop_limit / batches))
+    
     with mpool.Pool(processes=os.cpu_count()) as pool:
         init_time = time.time()
-        # STUDENT (Optional) change population initialization
-        population = []
+        
+        # Initialize both populations
+        initial_population = []
         for _ in range(pop_limit):
             r = random.random()
-            if r < 0.6:  # 60% random individuals
+            if r < 0.6:
                 ind = Individual.random_individual()
-                while len(ind.genome) < 20:  # Ensure minimum complexity
+                while len(ind.genome) < 20:
                     ind = Individual.random_individual()
-                population.append(ind)
-            elif r < 0.9:  # 30% empty individuals with basic structure
+                initial_population.append(ind)
+            elif r < 0.9:
                 base = Individual.empty_individual()
-                # Add some random elements to the basic structure
                 additional = Individual.random_individual()
                 base.genome.extend(list(filter(lambda x: x[0] > width/3, additional.genome[:10])))
-                population.append(base)
-            else:  # 10% completely empty individuals for diversity
-                population.append(Individual.empty_individual())
-        # But leave this line alone; we have to reassign to population because we get a new population that has more cached stuff in it.
-        population = pool.map(Individual.calculate_fitness,
-                              population,
-                              batch_size)
+                initial_population.append(base)
+            else:
+                initial_population.append(Individual.empty_individual())
+        
+        # Calculate initial fitness
+        initial_population = pool.map(Individual.calculate_fitness, initial_population, batch_size)
+        
+        # Split into feasible and infeasible populations
+        f_population = []
+        i_population = []
+        for ind in initial_population:
+            if ind.fitness() > 0 and ind._solvable:
+            #if ind.fitness() > 0 and ind.to_level()[0]['solvability'] == 1.0:
+                f_population.append(ind)
+            else:
+                i_population.append(ind)
+        
+        # Balance populations if needed
+        while len(f_population) < f_pop_size and len(i_population) > i_pop_size:
+            f_population.append(i_population.pop())
+        while len(i_population) < i_pop_size and len(f_population) > f_pop_size:
+            i_population.append(f_population.pop())
+        
         init_done = time.time()
         print("Created and calculated initial population statistics in:", init_done - init_time, "seconds")
+        
         generation = 0
         start = time.time()
         now = start
         print("Use ctrl-c to terminate this loop manually.")
+        
         try:
             while True:
                 now = time.time()
-                # Print out statistics
+                
                 if generation > 0:
-                    best = max(population, key=Individual.fitness)
+                    best = max(f_population, key=Individual.fitness)
                     best_fitness_history.append(best.fitness())
                     print("Generation:", str(generation))
-                    print("Max fitness:", str(best.fitness()))
+                    print("Max fitness (F):", str(best.fitness()))
+                    print("F-pop size:", len(f_population))
+                    print("I-pop size:", len(i_population))
                     print("Average generation time:", (now - start) / generation)
                     print("Net time:", now - start)
+                    
                     with open("levels/last.txt", 'w') as f:
                         for row in best.to_level():
                             f.write("".join(row) + "\n")
                     
-                    # STUDENT Determine stopping condition
                     stop_condition = (
-                        generation > 15 or     # Either run for 15 generations
-                        (generation > 5 and     # After at least 5 generations
-                         len(set(best_fitness_history[-5:])) == 1) # No improvement in last 5 generations
+                        generation > 15 or
+                        (generation > 5 and len(set(best_fitness_history[-5:])) == 1)
                     )
                     if stop_condition:
                         break
                 
                 generation += 1
-                # STUDENT Also consider using FI-2POP as in the Sorenson & Pasquier paper
                 gentime = time.time()
-                next_population = generate_successors(population)
+                
+                # Evolve both populations separately
+                f_next = generate_successors(f_population) if f_population else []
+                i_next = generate_successors(i_population) if i_population else []
+                
+                # Calculate fitness for both populations
+                f_next = pool.map(Individual.calculate_fitness, f_next, batch_size)
+                i_next = pool.map(Individual.calculate_fitness, i_next, batch_size)
+                
+                # Redistribute based on solvability
+                new_f_pop = []
+                new_i_pop = []
+
+                for ind in f_next + i_next:
+                    if ind.fitness() > 0 and ind._solvable: 
+                        new_f_pop.append(ind)
+                    else:
+                        new_i_pop.append(ind)
+                
+                # Balance populations
+                while len(new_f_pop) < f_pop_size and new_i_pop:
+                    new_f_pop.append(new_i_pop.pop())
+                while len(new_i_pop) < i_pop_size and new_f_pop:
+                    new_i_pop.append(new_f_pop.pop())
+                
+                f_population = new_f_pop
+                i_population = new_i_pop
+                
                 gendone = time.time()
                 print("Generated successors in:", gendone - gentime, "seconds")
-                # Calculate fitness in batches in parallel
-                next_population = pool.map(Individual.calculate_fitness,
-                                           next_population,
-                                           batch_size)
                 popdone = time.time()
                 print("Calculated fitnesses in:", popdone - gendone, "seconds")
-                population = next_population
+                
         except KeyboardInterrupt:
             pass
-    return population
+    
+    return f_population + i_population
 
 
 if __name__ == "__main__":
