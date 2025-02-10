@@ -1,0 +1,78 @@
+1. Selection Strategies
+We implemented two complementary selection strategies to maintain population diversity while favoring fit individuals:
+
+1. Tournament Selection (70% probability):
+- Uses tournament size of 5
+- Selects the fittest individual from random tournament groups
+- Provides strong selection pressure while maintaining diversity
+- Helps prevent premature convergence
+
+2. Roulette Wheel Selection (30% probability):
+- Probability of selection proportional to fitness
+- Gives all individuals a chance while favoring fitter ones
+- Helps maintain genetic diversity
+
+Additionally, we implemented elitism by preserving the top 10% of each population, ensuring our best solutions aren't lost.
+
+2. Fitness Function Improvements
+We significantly enhanced the fitness function using a dual-strategy approach through FI-2POP:
+
+Feasible Population Fitness:
+coefficients = dict(
+    meaningfulJumpVariance=2.0,    # Encourages varied jump challenges
+    negativeSpace=1.5,             # Better space usage
+    pathPercentage=2.0,            # Heavily rewards playable paths
+    emptyPercentage=1.0,           # Balanced empty space
+    linearity=-0.2,                # Allows non-linear level design
+    solvability=4.0,               # Critical for playability
+    rhythm=2.0,                    # Level pacing
+    verticality=2.0,               # Vertical exploration
+    powerup_distribution=1.5       # Strategic power-up placement
+)
+
+Infeasible Population Fitness:
+coefficients = dict(
+    negativeSpace=1.0,          # Open spaces
+    pathPercentage=3.0,         # Potential paths
+    emptyPercentage=1.0,        # Balanced space
+    decorationPercentage=0.5,   # Visual interest
+    linearity=-0.1,             # Design flexibility
+    meaningfulJumps=2.0         # Jump opportunities
+)
+
+3. Population Management (FI-2POP Implementation)
+We implemented the Feasible-Infeasible Two-Population Genetic Algorithm (FI-2POP):
+- Maintains separate feasible and infeasible populations
+- Allows exploration of non-viable solutions that might lead to good solutions
+- Each population evolves separately with specialized fitness metrics
+- Population size balanced 50-50 between feasible and infeasible
+- Automatic migration between populations based on solvability
+
+4. Element Distribution and Control
+Enhanced the random level generation with weighted probabilities:
+elements = [
+    (0.25, "platform"),    # Core level structure
+    (0.15, "coins"),       # Rewards
+    (0.15, "power-ups"),   # Player progression
+    (0.15, "blocks"),      # Level variety
+    (0.10, "holes"),       # Challenges
+    (0.08, "enemies"),     # Difficulty
+    (0.07, "pipes"),       # Decoration
+    (0.05, "stairs")       # Vertical movement
+]
+
+## Results and Performance
+The implementation showed significant improvements:
+- Initial fitness scores: ~23.6
+- Final fitness scores: ~26.2
+- Consistent population diversity (240/240 split between F/I populations)
+- Generation times averaged around 12-13 seconds
+- Clear fitness improvements over generations
+
+The resulting levels demonstrate a good balance of:
+- Playability (high solvability coefficients)
+- Challenge (varied jump requirements)
+- Engagement (strategic power-up and coin placement)
+- Design (balanced element distribution)
+
+The implementation successfully generates engaging, playable Mario levels while maintaining computational efficiency and design diversity.
