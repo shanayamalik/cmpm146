@@ -235,19 +235,21 @@ def metrics(levelStr):
                 'verticality': calculate_verticality(levelStr),
                 'powerup_distribution': calculate_powerup_distribution(levelStr)}
     else:
-        return {
-            'length': maxX,
-            'negativeSpace': negativeSpace,
-            'pathPercentage': -1,
-            'emptyPercentage': emptyPercentage,
-            'decorationPercentage': decorationPercentage,
-            'leniency': leniency,
-            'meaningfulJumps': -1,
-            'jumps': -1,
-            'meaningfulJumpVariance': -1,
-            'jumpVariance': -1,
-            'linearity': linearity,
-            'solvability': 0}
+        return {'length': maxX,
+                'negativeSpace': negativeSpace,
+                'pathPercentage': pathPercentage,
+                'emptyPercentage': emptyPercentage,
+                'decorationPercentage': decorationPercentage,
+                'leniency': leniency,
+                'meaningfulJumps': float(totalMeaningfulJumps) / float(pathcount),
+                'jumps': float(totalJumps) / float(pathcount),
+                'meaningfulJumpVariance': float(meaningfulJumpVariance) / float(pathcount),
+                'jumpVariance': float(jumpVariance) / float(pathcount),
+                'linearity': linearity,
+                'solvability': 1.0,
+                'rhythm': calculate_rhythm_metric(levelStr),
+                'verticality': calculate_verticality(levelStr),
+                'powerup_distribution': calculate_powerup_distribution(levelStr)}
 
 def calculate_rhythm_metric(levelStr):
     """Measures the rhythmic spacing of challenges"""
