@@ -7,24 +7,20 @@ class BasicModel(Model):
     def _define_model(self, input_shape, categories_count):
         self.model = Sequential([
             # First Conv Block
-            Conv2D(16, (3, 3), activation='relu', padding='same', input_shape=input_shape),
-            MaxPooling2D(3, 3),  # Increased pool size to reduce dimensions faster
+            Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=input_shape),
+            MaxPooling2D(2, 2),
             
             # Second Conv Block
-            Conv2D(24, (3, 3), activation='relu', padding='same'),
-            MaxPooling2D(3, 3),  # Increased pool size
+            Conv2D(48, (3, 3), activation='relu', padding='same'),
+            MaxPooling2D(2, 2),
             
             # Third Conv Block
             Conv2D(32, (3, 3), activation='relu', padding='same'),
             MaxPooling2D(2, 2),
             
-            # Fourth Conv Block - final reduction
-            Conv2D(32, (3, 3), activation='relu', padding='same'),
-            MaxPooling2D(2, 2),
-            
             # Flatten and Dense layers
             Flatten(),
-            Dense(24, activation='relu'),  # Reduced units
+            Dense(64, activation='relu'),
             Dense(categories_count, activation='softmax')
         ])
     
