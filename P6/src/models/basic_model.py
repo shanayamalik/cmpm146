@@ -10,26 +10,27 @@ class BasicModel(Model):
             layers.Rescaling(1./255, input_shape=input_shape),
             
             # First convolutional block
-            layers.Conv2D(16, (3, 3), activation='relu', padding='same'),
+            layers.Conv2D(32, (3, 3), activation='relu', padding='same'),
+            layers.BatchNormalization(),
             layers.MaxPooling2D((2, 2)),
             
             # Second convolutional block
-            layers.Conv2D(32, (3, 3), activation='relu', padding='same'),
+            layers.Conv2D(64, (3, 3), activation='relu', padding='same'),
+            layers.BatchNormalization(),
             layers.MaxPooling2D((2, 2)),
+            layers.Dropout(0.25),
             
             # Third convolutional block
-            layers.Conv2D(32, (3, 3), activation='relu', padding='same'),
-            layers.MaxPooling2D((2, 2)),
-            
-            # Fourth convolutional block
             layers.Conv2D(64, (3, 3), activation='relu', padding='same'),
+            layers.BatchNormalization(),
             layers.MaxPooling2D((2, 2)),
             
             # Global Average Pooling instead of Flatten
             layers.GlobalAveragePooling2D(),
+            layers.Dropout(0.5),
             
             # Fully connected layers
-            layers.Dense(32, activation='relu'),
+            layers.Dense(64, activation='relu'),
             layers.Dense(categories_count, activation='softmax')
         ])
     
