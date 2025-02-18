@@ -33,7 +33,7 @@ class BasicModel(Model):
 
     def _compile_model(self):
         self.model.compile(
-            optimizer=Adam(learning_rate=0.001),
+            optimizer=RMSprop(learning_rate=0.001),
             loss='categorical_crossentropy',
             metrics=['accuracy']
         )
