@@ -37,3 +37,4 @@ class BasicModel(Model):
             loss='categorical_crossentropy',
             metrics=['accuracy']
         )
+
