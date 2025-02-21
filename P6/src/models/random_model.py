@@ -1,6 +1,5 @@
 from models.model import Model
 from tensorflow.keras import Sequential, layers, models
-from tensorflow.keras.layers.experimental.preprocessing import Rescaling
 from tensorflow.keras.optimizers import RMSprop
 
 class RandomModel(Model):
@@ -14,7 +13,7 @@ class RandomModel(Model):
             layers.MaxPooling2D(2),
             
             # Single conv layer matching transfer model
-            layers.Conv2D(32, 3, padding='same', activation='relu'),
+            layers.Conv2D(24, 3, padding='same', activation='relu'),
             
             # Second maxpool
             layers.MaxPooling2D(2),
